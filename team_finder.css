@@ -1,0 +1,654 @@
+/**
+ * Poketopia - Party Finder Stylesheet
+ * Organized by modules for better maintenance.
+ */
+
+/* ==========================================================================
+   1. Variables & Global Reset
+   ========================================================================== */
+:root {
+    --window-bg: #0b0b0b;
+    --window-border: #1a1a1a;
+    --top-line: #3b82f6;
+    --icon-yellow: #faba4d;
+    --text-white: #f0f0f0;
+    --text-muted: #888888;
+    --btn-blue: #3b61a8;
+    --btn-blue-hover: #4872bf;
+    --btn-text: #b1c6e8;
+    --close-red: #c93b3b;
+    --list-bg: #141414;
+    --list-hover: #1c1c1c;
+    --tag-bg: #2a2a2a;
+    --tag-text: #aaaaaa;
+    --font-main: 'Inter', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-main);
+    color: var(--text-white);
+    background: #000;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url('assets/background/background.png');
+    background-size: cover;
+    background-position: center;
+    filter: blur(1px) brightness(0.7);
+    z-index: -1;
+}
+
+/* ==========================================================================
+   2. Layout & Main Window
+   ========================================================================== */
+.tf-window {
+    width: 900px;
+    height: 650px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+    border: 20px solid transparent;
+    border-image: url('assets/images_ui/mainwindow.png') 25 fill stretch;
+    overflow: hidden;
+}
+
+.top-border { display: none; }
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px 10px 25px;
+}
+
+.header-title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.title-icon {
+    color: var(--icon-yellow);
+    font-size: 1.8rem;
+}
+
+.header-title span {
+    font-size: 1.3rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.close-icon {
+    color: var(--close-red);
+    font-size: 1.6rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-icon:hover { color: #f04848; }
+
+.separator-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 5px 0;
+}
+
+.separator {
+    height: 4px;
+    width: 95%;
+    background: url('assets/images_ui/separator_horizontal.png') no-repeat center;
+    background-size: 100% 100%;
+}
+
+/* ==========================================================================
+   3. Toolbar & Filters
+   ========================================================================== */
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 25px;
+}
+
+.toolbar-left, .toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.custom-select { position: relative; }
+
+.custom-select select {
+    appearance: none;
+    background-color: var(--list-bg);
+    border: 1px solid var(--window-border);
+    color: var(--text-white);
+    padding: 10px 35px 10px 15px;
+    border-radius: 20px;
+    font-family: var(--font-main);
+    font-size: 0.9rem;
+    outline: none;
+    cursor: pointer;
+}
+
+.select-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: var(--text-muted);
+}
+
+.search-box { position: relative; }
+
+.search-box input {
+    background-color: var(--list-bg);
+    border: 1px solid var(--window-border);
+    color: var(--text-white);
+    padding: 10px 15px 10px 35px;
+    border-radius: 20px;
+    width: 250px;
+    font-family: var(--font-main);
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+}
+
+/* ==========================================================================
+   4. Buttons
+   ========================================================================== */
+.action-btn {
+    background-color: var(--btn-blue);
+    color: var(--btn-text);
+    border: none;
+    padding: 10px 25px;
+    border-radius: 50px;
+    font-family: var(--font-main);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.action-btn:hover {
+    background-color: var(--btn-blue-hover);
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+.action-btn:active { transform: translateY(0); }
+
+.action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.highlight-btn {
+    background-color: #2563eb;
+    color: #fff;
+}
+
+.btn-ghost {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid #222;
+}
+
+.btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: #444;
+}
+
+/* ==========================================================================
+   5. Team List & Cards
+   ========================================================================== */
+.team-list-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 25px 25px 25px;
+}
+
+.list-header {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1.5fr 0.8fr;
+    padding: 15px 15px;
+    color: #555;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.team-card {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1.5fr 0.8fr;
+    background-color: var(--list-bg);
+    border: 1px solid var(--window-border);
+    border-radius: 6px;
+    margin-bottom: 10px;
+    padding: 15px;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.team-card:hover {
+    background-color: var(--list-hover);
+    border-color: var(--top-line);
+    transform: translateX(4px);
+    box-shadow: -4px 0 0 var(--top-line), 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.content-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #eee;
+    display: block;
+}
+
+.leader-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.leader-name {
+    font-size: 0.95rem;
+    color: #faba4d;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+/* ==========================================================================
+   6. Tooltips
+   ========================================================================== */
+.player-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    background: #080808;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 12px;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s;
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+}
+
+.leader-wrapper:hover .player-tooltip {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(-5px);
+}
+
+.tooltip-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #222;
+    margin-bottom: 8px;
+}
+
+.clan-icon { width: 24px; height: 24px; }
+.tooltip-clan { color: #eee; font-weight: 600; font-size: 0.9rem; }
+.tooltip-lvl { color: #888; font-size: 0.8rem; margin-left: auto; }
+.tooltip-poke-row { display: flex; align-items: center; gap: 10px; }
+.tooltip-poke-img { width: 40px; height: 40px; }
+.tooltip-poke-name { font-size: 0.85rem; color: #aaa; }
+
+/* ==========================================================================
+   7. Role Slots
+   ========================================================================== */
+.role-slots-container {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.role-slot {
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid #222;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: #333;
+    transition: all 0.2s;
+}
+
+.role-slot.filled { border-width: 2px; }
+
+.role-slot.tank { color: #faba4d; background: rgba(250, 186, 77, 0.1); }
+.role-slot.otdd { color: #10b981; background: rgba(16, 185, 129, 0.1); }
+.role-slot.sot { color: #8b5cf6; background: rgba(139, 92, 246, 0.1); }
+.role-slot.bdd { color: #ef4444; background: rgba(239, 68, 68, 0.1); }
+
+/* ==========================================================================
+   8. Modals Base
+   ========================================================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    z-index: 1000;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modal-section-label {
+    color: #666;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.modal-window {
+    width: 600px;
+    position: relative;
+    transform: translateY(20px);
+    transition: transform 0.2s;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+    border: 20px solid transparent;
+    border-image: url('assets/images_ui/mainwindow.png') 25 fill stretch;
+}
+
+.modal-overlay.active .modal-window { transform: translateY(0); }
+
+/* ==========================================================================
+   9. Pokemon Picker
+   ========================================================================== */
+#pickerGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 15px;
+    padding: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.picker-item {
+    background: #0d0d0d;
+    border: 1px solid #1a1a1a;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 110px;
+}
+
+.picker-item:hover {
+    border-color: #3b82f6;
+    background: #111;
+    transform: translateY(-2px);
+}
+
+.picker-item.selected {
+    background: rgba(0, 173, 239, 0.1);
+    border: 2px solid #00adef;
+    box-shadow: 0 0 15px rgba(0, 173, 239, 0.2);
+}
+
+.picker-poke-roles {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: flex;
+    gap: 2px;
+    background: rgba(0,0,0,0.5);
+    padding: 2px;
+    border-radius: 4px;
+}
+
+.picker-poke-roles img {
+    opacity: 0.7;
+}
+
+.picker-item:hover .picker-poke-roles img {
+    opacity: 1;
+}
+
+.picker-poke-img { width: 64px; height: 64px; object-fit: contain; }
+.picker-poke-name { font-size: 0.8rem; color: #eee; margin-top: 5px; font-weight: 500; }
+
+/* ==========================================================================
+   10. Team Creation Styles
+   ========================================================================== */
+.dynamic-role-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #080808;
+    border: 1px solid #1a1a1a;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.role-row-icon {
+    width: 36px; height: 36px;
+    background: #000;
+    border: 1px solid #333;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+}
+
+.role-icon-preview { width: 24px; height: 24px; object-fit: contain; }
+
+.role-select {
+    background: #080808 !important;
+    border: 1px solid #333 !important;
+    color: #eee !important;
+    font-weight: 600 !important;
+    padding: 6px 10px !important;
+    border-radius: 4px !important;
+    cursor: pointer;
+}
+
+.role-row-poke-picker {
+    background: #111;
+    border: 1px solid #333;
+    padding: 4px 10px;
+    border-radius: 4px;
+    display: flex; align-items: center; gap: 8px;
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   11. Applicant & Detail Premium Styles
+   ========================================================================== */
+.applicant-row-premium {
+    background: #080808;
+    border: 1px solid #1a1a1a;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+.arp-clan-icon { width: 24px; height: 24px; margin-right: 8px; }
+
+.arp-icon-btn {
+    font-size: 2.2rem;
+    cursor: pointer;
+    transition: transform 0.1s, filter 0.2s;
+    opacity: 0.9;
+}
+
+.arp-icon-btn:hover { transform: scale(1.1); opacity: 1; }
+.arp-icon-btn.accept { color: #10b981; filter: drop-shadow(0 0 5px rgba(16, 185, 129, 0.3)); }
+.arp-icon-btn.decline { color: #ef4444; filter: drop-shadow(0 0 5px rgba(239, 68, 68, 0.3)); }
+
+.player-detail-card-premium {
+    background: #080808;
+    border: 1px solid #1a1a1a;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex; flex-direction: column; gap: 15px;
+}
+
+.pdc-header { display: flex; align-items: center; gap: 15px; }
+.pdc-clan-icon {
+    width: 48px; height: 48px;
+    background: #000; border: 1px solid #222; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+}
+.pdc-clan-name { color: #eee; font-size: 1.3rem; font-weight: 700; }
+.pdc-level { color: #888; font-size: 0.9rem; }
+.status-dot.online { background: #10b981; box-shadow: 0 0 5px #10b981; }
+
+.pdc-slots-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+.pdc-slot {
+    background: #0d0d0d; border: 1px solid #1a1a1a; border-radius: 6px;
+    aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center;
+}
+.pdc-poke-img { width: 44px; height: 44px; object-fit: contain; }
+
+.pdc-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+.pdc-helds-list {
+    display: flex;
+    gap: 8px;
+    background: rgba(0,0,0,0.4);
+    padding: 6px 12px;
+    border-radius: 50px;
+    border: 1px solid #1a1a1a;
+}
+
+/* ==========================================================================
+   12. Application Modal Specifics
+   ========================================================================== */
+.role-btn {
+    background: #080808;
+    border: 1px solid #222;
+    color: #888;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.role-btn:hover {
+    background: #111;
+    border-color: #333;
+}
+
+.role-btn.active {
+    background: rgba(37, 99, 235, 0.1);
+    border: 1px solid #2563eb;
+    color: #fff;
+    box-shadow: 0 0 15px rgba(37, 99, 235, 0.15);
+}
+
+.role-btn-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.3);
+    border-radius: 50%;
+    margin-bottom: 2px;
+}
+
+.role-btn span {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+#applyPokePicker {
+    background: #080808;
+    border: 1px solid #1a1a1a;
+    border-radius: 8px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#applyPokePicker:hover {
+    background: #0b0b0b;
+    border-color: #333;
+}
+
+#applyPokeName {
+    color: #eee;
+    font-weight: 700;
+    font-size: 1.05rem;
+}
+
+#applyPokeHelds {
+    display: flex;
+    gap: 5px;
+    margin-top: 4px;
+}
+
+#applyPokeHelds img {
+    width: 18px;
+    height: 18px;
+    border: 1px solid #333;
+    border-radius: 2px;
+}

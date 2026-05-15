@@ -1,0 +1,159 @@
+:root {
+    --window-bg: #0b0b0b;
+    --window-border: #1a1a1a;
+    --top-line: #3b82f6;
+    --icon-yellow: #faba4d;
+    --text-white: #f0f0f0;
+    --text-muted: #6a6a6a;
+    --btn-blue: #3b61a8;
+    --btn-blue-hover: #4872bf;
+    --btn-text: #b1c6e8;
+    --close-red: #c93b3b;
+    --font-main: 'Inter', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-main);
+    color: var(--text-white);
+    background: #000;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('assets/background/background.png');
+    background-size: cover;
+    background-position: center;
+    filter: blur(1px) brightness(0.7);
+    z-index: -1;
+}
+
+.party-window {
+    width: 480px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 20px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+    border: 20px solid transparent;
+    border-image: url('assets/images_ui/mainwindow.png') 25 fill stretch;
+}
+
+.top-border {
+    display: none; /* Removed because mainwindow asset already has a top border */
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 30px 15px 30px;
+}
+
+.header-title {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.title-icon {
+    color: var(--icon-yellow);
+    font-size: 2.2rem;
+}
+
+.header-title span {
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+}
+
+.close-icon {
+    color: var(--close-red);
+    font-size: 2rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-icon:hover {
+    color: #f04848;
+}
+
+.separator-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.separator {
+    height: 4px;
+    width: 90%;
+    background: url('assets/images_ui/separator_horizontal.png') no-repeat center;
+    background-size: 100% 100%;
+}
+
+.button-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.action-btn {
+    background-color: var(--btn-blue);
+    color: var(--btn-text);
+    border: none;
+    padding: 16px 20px;
+    border-radius: 30px;
+    font-family: var(--font-main);
+    font-size: 1.05rem;
+    font-weight: 400;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.action-btn:hover {
+    background-color: var(--btn-blue-hover);
+    color: #ffffff;
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin: 15px 0 5px 0;
+}
+
+.empty-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 40px 0 20px 0;
+}
+
+.empty-text {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+.empty-img {
+    height: 65px;
+    opacity: 0.85;
+}

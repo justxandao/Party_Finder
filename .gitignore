@@ -1,0 +1,28 @@
+# Dependências
+node_modules/
+dist/
+build/
+
+# Logs e arquivos de sistema
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+Thumbs.db
+
+# Configurações de IDE e Ferramentas
+.vscode/
+.idea/
+.project
+.settings/
+.gemini/
+.env
+
+# Arquivos Temporários
+*.tmp
+*.temp
+scratch/
+
+# Assets Grandes (Opcional - dependendo se quiser versionar sprites)
+# assets/pokemons/
