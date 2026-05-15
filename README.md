@@ -34,4 +34,4 @@ Uma interface premium e dinâmica de **Party Finder** (Localizador de Grupos) de
 4. Clique em "Criar Grupo" para abrir o modal de configuração e anunciar sua própria party.
 
 ---
-Desenvolvido com Inteligência Artifical como objeto de estudo.
+Desenvolvido com Inteligência Artificial para estudo próprio.
