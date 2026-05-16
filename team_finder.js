@@ -8,6 +8,7 @@ let contentsData = null;
 let dummyTeams = [];
 let activeRowForPicker = null;
 let selectedPokemon = null;
+let selectedHelds = [];
 let teamBeingAppliedTo = null;
 let selectedApplyRole = null;
 
@@ -127,7 +128,7 @@ function renderTeams(query = "", type = "all") {
         }
 
         const roleId = leaderRole ? leaderRole.type : 'otdd';
-        const helds = team.helds || getHeldsForRole(roleId);
+        const helds = team.helds || getHeldsForRole(roleId, team.leader);
         const heldsHtml = helds.map(h => `<img src="${h.img}" style="width:26px; height:26px; border:1px solid #333; border-radius:2px;" title="${h.name}">`).join('');
 
         const html = `
@@ -178,7 +179,7 @@ function renderTeams(query = "", type = "all") {
                                     clan: "ironhard",
                                     dex: team.dex,
                                     pokeName: team.leader_poke_name,
-                                    helds: team.helds || getHeldsForRole('otdd')
+                                    helds: team.helds || getHeldsForRole(leaderRole ? leaderRole.type : 'otdd', "Xandy")
                                 }];
                             }
                             return membersList.map(m => `
@@ -239,7 +240,7 @@ function openDetailsModal(teamId) {
             dex: team.dex, 
             pokeName: pokeName, 
             isLeader: true,
-            helds: team.helds || getHeldsForRole(leaderRole ? leaderRole.type : 'otdd')
+            helds: team.helds || getHeldsForRole(leaderRole ? leaderRole.type : 'otdd', team.leader)
         }
     ];
 
@@ -434,8 +435,8 @@ function selectPokemonFromPicker(pokeName) {
         roleId = selectedApplyRole;
     }
 
-    const helds = getHeldsForRole(roleId);
-    heldsContainer.innerHTML = helds.map(h => `
+    selectedHelds = getHeldsForRole(roleId);
+    heldsContainer.innerHTML = selectedHelds.map(h => `
         <img src="${h.img}" style="width:16px; height:16px; border:1px solid #333; border-radius:2px;" title="${h.name}">
     `).join('');
 
@@ -466,7 +467,7 @@ function confirmPokemonSelection() {
         pokeNameElem.innerText = selectedPokemon.name;
         pokeIcon.src = getPokeImg(selectedPokemon.dex, selectedPokemon.name);
 
-        const helds = getHeldsForRole(selectedApplyRole || 'otdd');
+        const helds = selectedHelds.length > 0 ? selectedHelds : getHeldsForRole(selectedApplyRole || 'otdd', "Xandy");
         heldsContainer.innerHTML = helds.map(h => `
             <img src="${h.img}" style="width:36px; height:36px; border:1px solid #333; border-radius:4px;" title="${h.name}">
         `).join('');
@@ -499,8 +500,7 @@ function confirmPokemonSelection() {
             // Generate and Show Helds for the creator
             const heldsContainer = activeRowForPicker.querySelector('.creator-poke-helds');
             if (heldsContainer) {
-                const primaryRole = selectedPokemon.roles[0] || 'otdd';
-                const helds = getHeldsForRole(primaryRole);
+                const helds = selectedHelds.length > 0 ? selectedHelds : getHeldsForRole(selectedPokemon.roles[0] || 'otdd', "Xandy");
                 heldsContainer.innerHTML = helds.map(h => `
                     <img src="${h.img}" title="${h.name}" style="width:24px; height:24px; border:1px solid #333; border-radius:2px;">
                 `).join('');
@@ -796,16 +796,25 @@ function createGroup() {
 }
 
 // --- Helpers ---
-function getHeldsForRole(roleType) {
-    const isDefensive = roleType === 'tank' || roleType === 'otanker';
-    const tier = Math.random() > 0.5 ? '7' : '8';
+function getHeldsForRole(roleType, playerName = "Xandy") {
+    // Deterministic seed based on player name to keep helds consistent
+    let seed = 0;
+    for (let i = 0; i < playerName.length; i++) seed += playerName.charCodeAt(i);
     
-    // Randomize primary held
-    const defTypes = ['def', 'def', 'Ghost']; // Ghost is common
-    const atkTypes = ['atk', 'atk', 'atk'];
+    const pseudoRandom = () => {
+        seed = (seed * 9301 + 49297) % 233280;
+        return seed / 233280;
+    };
+
+    const isDefensive = roleType.toLowerCase().includes('tank');
+    const tier = pseudoRandom() > 0.5 ? '7' : '8';
+    
+    // Randomize primary held type but keep it stable for the same name
+    const defTypes = ['def', 'Ghost'];
+    const atkTypes = ['atk'];
     
     const types = isDefensive ? defTypes : atkTypes;
-    const t1 = types[Math.floor(Math.random() * types.length)];
+    const t1 = types[Math.floor(pseudoRandom() * types.length)];
     
     const helds = [];
     if (t1 === 'Ghost') {
