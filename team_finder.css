@@ -45,7 +45,10 @@ body {
 body::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background-image: url('assets/background/background.png');
     background-size: cover;
     background-position: center;
@@ -68,7 +71,9 @@ body::before {
     overflow: hidden;
 }
 
-.top-border { display: none; }
+.top-border {
+    display: none;
+}
 
 .header {
     display: flex;
@@ -101,7 +106,9 @@ body::before {
     transition: color 0.2s;
 }
 
-.close-icon:hover { color: #f04848; }
+.close-icon:hover {
+    color: #f04848;
+}
 
 .separator-container {
     width: 100%;
@@ -127,13 +134,16 @@ body::before {
     padding: 15px 25px;
 }
 
-.toolbar-left, .toolbar-right {
+.toolbar-left,
+.toolbar-right {
     display: flex;
     align-items: center;
     gap: 15px;
 }
 
-.custom-select { position: relative; }
+.custom-select {
+    position: relative;
+}
 
 .custom-select select {
     appearance: none;
@@ -150,14 +160,16 @@ body::before {
 
 .select-icon {
     position: absolute;
-    right: 15px;
+    right: 40px;
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
     color: var(--text-muted);
 }
 
-.search-box { position: relative; }
+.search-box {
+    position: relative;
+}
 
 .search-box input {
     background-color: var(--list-bg);
@@ -204,7 +216,9 @@ body::before {
     transform: translateY(-1px);
 }
 
-.action-btn:active { transform: translateY(0); }
+.action-btn:active {
+    transform: translateY(0);
+}
 
 .action-btn:disabled {
     opacity: 0.5;
@@ -292,7 +306,7 @@ body::before {
    ========================================================================== */
 .player-tooltip {
     position: absolute;
-    bottom: 100%;
+    top: 100%;
     left: 0;
     background: #080808;
     border: 1px solid #333;
@@ -302,14 +316,14 @@ body::before {
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.2s, transform 0.2s;
-    transform: translateY(-10px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    transform: translateY(10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
 }
 
 .leader-wrapper:hover .player-tooltip {
     opacity: 1;
     pointer-events: all;
-    transform: translateY(-5px);
+    transform: translateY(5px);
 }
 
 .tooltip-header {
@@ -321,12 +335,38 @@ body::before {
     margin-bottom: 8px;
 }
 
-.clan-icon { width: 24px; height: 24px; }
-.tooltip-clan { color: #eee; font-weight: 600; font-size: 0.9rem; }
-.tooltip-lvl { color: #888; font-size: 0.8rem; margin-left: auto; }
-.tooltip-poke-row { display: flex; align-items: center; gap: 10px; }
-.tooltip-poke-img { width: 40px; height: 40px; }
-.tooltip-poke-name { font-size: 0.85rem; color: #aaa; }
+.clan-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.tooltip-clan {
+    color: #eee;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.tooltip-lvl {
+    color: #888;
+    font-size: 0.8rem;
+    margin-left: auto;
+}
+
+.tooltip-poke-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tooltip-poke-img {
+    width: 40px;
+    height: 40px;
+}
+
+.tooltip-poke-name {
+    font-size: 0.85rem;
+    color: #aaa;
+}
 
 /* ==========================================================================
    7. Role Slots
@@ -335,6 +375,7 @@ body::before {
     display: flex;
     gap: 6px;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .role-slot {
@@ -351,19 +392,39 @@ body::before {
     transition: all 0.2s;
 }
 
-.role-slot.filled { border-width: 2px; }
+.role-slot.filled {
+    border-width: 2px;
+}
 
-.role-slot.tank { color: #faba4d; background: rgba(250, 186, 77, 0.1); }
-.role-slot.otdd { color: #10b981; background: rgba(16, 185, 129, 0.1); }
-.role-slot.sot { color: #8b5cf6; background: rgba(139, 92, 246, 0.1); }
-.role-slot.bdd { color: #ef4444; background: rgba(239, 68, 68, 0.1); }
+.role-slot.tank {
+    color: #faba4d;
+    background: rgba(250, 186, 77, 0.1);
+}
+
+.role-slot.otdd {
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.role-slot.sot {
+    color: #8b5cf6;
+    background: rgba(139, 92, 246, 0.1);
+}
+
+.role-slot.bdd {
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+}
 
 /* ==========================================================================
    8. Modals Base
    ========================================================================== */
 .modal-overlay {
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: rgba(0, 0, 0, 0.6);
     display: flex;
     justify-content: center;
@@ -399,7 +460,9 @@ body::before {
     border-image: url('assets/images_ui/mainwindow.png') 25 fill stretch;
 }
 
-.modal-overlay.active .modal-window { transform: translateY(0); }
+.modal-overlay.active .modal-window {
+    transform: translateY(0);
+}
 
 /* ==========================================================================
    9. Pokemon Picker
@@ -447,7 +510,7 @@ body::before {
     right: 5px;
     display: flex;
     gap: 2px;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.5);
     padding: 2px;
     border-radius: 4px;
 }
@@ -460,8 +523,18 @@ body::before {
     opacity: 1;
 }
 
-.picker-poke-img { width: 64px; height: 64px; object-fit: contain; }
-.picker-poke-name { font-size: 0.8rem; color: #eee; margin-top: 5px; font-weight: 500; }
+.picker-poke-img {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+}
+
+.picker-poke-name {
+    font-size: 0.8rem;
+    color: #eee;
+    margin-top: 5px;
+    font-weight: 500;
+}
 
 /* ==========================================================================
    10. Team Creation Styles
@@ -478,82 +551,191 @@ body::before {
 }
 
 .role-row-icon {
-    width: 36px; height: 36px;
+    width: 36px;
+    height: 36px;
     background: #000;
     border: 1px solid #333;
     border-radius: 6px;
-    display: flex; align-items: center; justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.role-icon-preview { width: 24px; height: 24px; object-fit: contain; }
+.role-icon-preview {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
 
 .role-select {
-    background: #080808 !important;
+    background: #080808 url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23666%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E') no-repeat !important;
+    background-position: right 25px top 50% !important;
+    background-size: 10px auto !important;
     border: 1px solid #333 !important;
     color: #eee !important;
     font-weight: 600 !important;
-    padding: 6px 10px !important;
-    border-radius: 4px !important;
+    padding: 6px 50px 6px 15px !important;
+    border-radius: 50px !important;
     cursor: pointer;
+    text-align: left !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    width: 100%;
+}
+
+.role-select:focus {
+    border-color: #2563eb !important;
+    outline: none;
 }
 
 .role-row-poke-picker {
     background: #111;
     border: 1px solid #333;
-    padding: 4px 10px;
+    padding: 6px 12px;
     border-radius: 4px;
-    display: flex; align-items: center; gap: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
     cursor: pointer;
+    transition: all 0.2s;
+}
+
+.role-row-poke-picker:hover {
+    background: #181818;
+    border-color: #444;
 }
 
 /* ==========================================================================
    11. Applicant & Detail Premium Styles
    ========================================================================== */
 .applicant-row-premium {
-    background: #080808;
+    background: #0d0d0d;
     border: 1px solid #1a1a1a;
-    border-radius: 12px;
-    padding: 15px;
-    margin-bottom: 12px;
+    border-radius: 8px;
+    padding: 12px 20px;
+    margin-bottom: 8px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
-.arp-clan-icon { width: 24px; height: 24px; margin-right: 8px; }
+.applicant-row-premium:hover {
+    border-color: #333;
+    background: #121212;
+}
+
+.large-held-slot {
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #333;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.large-held-slot img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
 
 .arp-icon-btn {
-    font-size: 2.2rem;
+    width: 24px;
+    height: 24px;
     cursor: pointer;
-    transition: transform 0.1s, filter 0.2s;
-    opacity: 0.9;
+    transition: transform 0.1s, opacity 0.2s;
+    opacity: 0.8;
 }
 
-.arp-icon-btn:hover { transform: scale(1.1); opacity: 1; }
-.arp-icon-btn.accept { color: #10b981; filter: drop-shadow(0 0 5px rgba(16, 185, 129, 0.3)); }
-.arp-icon-btn.decline { color: #ef4444; filter: drop-shadow(0 0 5px rgba(239, 68, 68, 0.3)); }
+.arp-icon-btn:hover {
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+.arp-icon-btn.accept {
+    color: #10b981;
+    font-size: 1.2rem;
+}
+
+.arp-icon-btn.decline {
+    color: #ef4444;
+    font-size: 1.2rem;
+}
+
+.arp-icon-btn.decline:hover {
+    transform: scale(1.15);
+    color: #f87171;
+}
 
 .player-detail-card-premium {
     background: #080808;
     border: 1px solid #1a1a1a;
     border-radius: 8px;
     padding: 20px;
-    display: flex; flex-direction: column; gap: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
-.pdc-header { display: flex; align-items: center; gap: 15px; }
+.pdc-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
 .pdc-clan-icon {
-    width: 48px; height: 48px;
-    background: #000; border: 1px solid #222; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: #000;
+    border: 1px solid #222;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-.pdc-clan-name { color: #eee; font-size: 1.3rem; font-weight: 700; }
-.pdc-level { color: #888; font-size: 0.9rem; }
-.status-dot.online { background: #10b981; box-shadow: 0 0 5px #10b981; }
 
-.pdc-slots-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
-.pdc-slot {
-    background: #0d0d0d; border: 1px solid #1a1a1a; border-radius: 6px;
-    aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center;
+.pdc-clan-name {
+    color: #eee;
+    font-size: 1.3rem;
+    font-weight: 700;
 }
-.pdc-poke-img { width: 44px; height: 44px; object-fit: contain; }
+
+.pdc-level {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.status-dot.online {
+    background: #10b981;
+    box-shadow: 0 0 5px #10b981;
+}
+
+.pdc-slots-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+}
+
+.pdc-slot {
+    background: #0d0d0d;
+    border: 1px solid #1a1a1a;
+    border-radius: 6px;
+    aspect-ratio: 1/1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pdc-poke-img {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+}
 
 .pdc-footer {
     display: flex;
@@ -564,7 +746,7 @@ body::before {
 .pdc-helds-list {
     display: flex;
     gap: 8px;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0, 0, 0, 0.4);
     padding: 6px 12px;
     border-radius: 50px;
     border: 1px solid #1a1a1a;
@@ -577,12 +759,12 @@ body::before {
     background: #080808;
     border: 1px solid #222;
     color: #888;
-    padding: 15px;
-    border-radius: 8px;
+    padding: 6px 10px;
+    border-radius: 6px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 2px;
     cursor: pointer;
     transition: all 0.2s;
 }
@@ -592,11 +774,26 @@ body::before {
     border-color: #333;
 }
 
+.role-btn-icon img {
+    width: 20px !important;
+    height: 20px !important;
+}
+
+.role-btn span {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
 .role-btn.active {
     background: rgba(37, 99, 235, 0.1);
     border: 1px solid #2563eb;
     color: #fff;
-    box-shadow: 0 0 15px rgba(37, 99, 235, 0.15);
+    box-shadow: 0 0 10px rgba(37, 99, 235, 0.2);
+}
+
+color: #fff;
+box-shadow: 0 0 15px rgba(37, 99, 235, 0.15);
 }
 
 .role-btn-icon {
@@ -605,7 +802,7 @@ body::before {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0,0,0,0.3);
+    background: rgba(0, 0, 0, 0.3);
     border-radius: 50%;
     margin-bottom: 2px;
 }
@@ -651,4 +848,48 @@ body::before {
     height: 18px;
     border: 1px solid #333;
     border-radius: 2px;
+}
+
+/* ==========================================================================
+   13. Multi-Role Creator Styles
+   ========================================================================== */
+.creator-roles-container {
+    display: flex;
+    gap: 5px;
+    background: #080808;
+    padding: 5px;
+    border-radius: 8px;
+    border: 1px solid #222;
+}
+
+.creator-role-toggle {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    filter: grayscale(1) opacity(0.3);
+    background: transparent;
+    border: 1px solid transparent;
+}
+
+.creator-role-toggle:hover {
+    filter: grayscale(0.5) opacity(0.7);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.creator-role-toggle.active {
+    filter: none !important;
+    opacity: 1 !important;
+    background: rgba(255, 255, 255, 0.05);
+    border-color: #444;
+}
+
+.creator-role-toggle img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
 }

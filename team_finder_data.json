@@ -23,13 +23,6 @@
     ],
     "pokemons": [
         {
-            "name": "Charizard",
-            "dex": 6,
-            "roles": [
-                "bdd"
-            ]
-        },
-        {
             "name": "Blastoise",
             "dex": 9,
             "roles": [
@@ -40,8 +33,7 @@
             "name": "Tyranitar",
             "dex": 248,
             "roles": [
-                "tank",
-                "bdd"
+                "otdd"
             ]
         },
         {
@@ -55,78 +47,49 @@
             "name": "Lapras",
             "dex": 131,
             "roles": [
-                "sot"
-            ]
-        },
-        {
-            "name": "Snorlax",
-            "dex": 143,
-            "roles": [
-                "tank"
-            ]
-        },
-        {
-            "name": "Metagross",
-            "dex": 376,
-            "roles": [
-                "tank"
-            ]
-        },
-        {
-            "name": "Aggron",
-            "dex": 306,
-            "roles": [
-                "tank"
+                "bdd"
             ]
         },
         {
             "name": "Steelix",
             "dex": 208,
             "roles": [
-                "tank"
+                "otdd"
             ]
         },
         {
             "name": "Rhyperior",
             "dex": 464,
             "roles": [
-                "tank"
+                "bdd"
             ]
         },
         {
             "name": "Mamoswine",
             "dex": 473,
             "roles": [
-                "tank"
+                "otdd"
             ]
         },
         {
             "name": "Garchomp",
             "dex": 445,
             "roles": [
-                "tank",
                 "bdd"
-            ]
-        },
-        {
-            "name": "Swampert",
-            "dex": 260,
-            "roles": [
-                "tank"
             ]
         },
         {
             "name": "Empoleon",
             "dex": 395,
             "roles": [
-                "tank"
+                "otdd"
             ]
         },
         {
             "name": "Arcanine",
             "dex": 59,
             "roles": [
-                "bdd"
+                "otdd"
             ]
         },
         {
@@ -140,7 +103,7 @@
             "name": "Accelgor",
             "dex": 617,
             "roles": [
-                "tank"
+                "otdd"
             ]
         },
         {
@@ -273,7 +236,7 @@
             "name": "Beartic",
             "dex": 614,
             "roles": [
-                "tank"
+                "otdd"
             ]
         },
         {
@@ -298,13 +261,6 @@
             ]
         },
         {
-            "name": "Champion Primeape",
-            "dex": 57,
-            "roles": [
-                "bdd"
-            ]
-        },
-        {
             "name": "Clefable",
             "dex": 36,
             "roles": [
@@ -315,7 +271,7 @@
             "name": "Cofagrigus",
             "dex": 563,
             "roles": [
-                "tank"
+                "otdd"
             ]
         },
         {
@@ -378,7 +334,7 @@
             "name": "Electabuzz",
             "dex": 125,
             "roles": [
-                "tank"
+                "otdd"
             ]
         },
         {
@@ -386,20 +342,6 @@
             "dex": 466,
             "roles": [
                 "bdd"
-            ]
-        },
-        {
-            "name": "Elite Farfetch'D",
-            "dex": 83,
-            "roles": [
-                "bdd"
-            ]
-        },
-        {
-            "name": "Elite Hitmontop",
-            "dex": 237,
-            "roles": [
-                "tank"
             ]
         },
         {
@@ -434,7 +376,7 @@
             "name": "Florges",
             "dex": 671,
             "roles": [
-                "tank"
+                "otdd"
             ]
         },
         {
@@ -448,7 +390,7 @@
             "name": "Galarian Rapidash",
             "dex": 78,
             "roles": [
-                "tank"
+                "otdd"
             ]
         },
         {
@@ -483,21 +425,6 @@
             "name": "Gogoat",
             "dex": 673,
             "roles": [
-                "tank"
-            ]
-        },
-        {
-            "name": "Golden Steelix",
-            "dex": 0,
-            "roles": [
-                "bdd"
-            ]
-        },
-        {
-            "name": "Golden Sudowoodo",
-            "dex": 0,
-            "roles": [
-                "bdd",
                 "otdd"
             ]
         },
@@ -547,7 +474,7 @@
             "name": "Haxorus",
             "dex": 612,
             "roles": [
-                "tank"
+                "otdd"
             ]
         },
         {
@@ -593,13 +520,6 @@
             ]
         },
         {
-            "name": "Klinklang",
-            "dex": 601,
-            "roles": [
-                "tank"
-            ]
-        },
-        {
             "name": "Kricketune",
             "dex": 402,
             "roles": [
@@ -617,7 +537,7 @@
             "name": "Light Ball Pikachu",
             "dex": 25,
             "roles": [
-                "tank"
+                "otdd"
             ]
         },
         {
@@ -652,7 +572,7 @@
             "name": "Magmar",
             "dex": 126,
             "roles": [
-                "tank"
+                "otdd"
             ]
         },
         {
@@ -688,14 +608,13 @@
             "name": "Mega Aerodactyl",
             "dex": 142,
             "roles": [
-                "tank"
+                "otdd"
             ]
         },
         {
             "name": "Mega Aggron",
             "dex": 306,
             "roles": [
-                "tank",
                 "bdd",
                 "otdd"
             ]
@@ -739,7 +658,6 @@
             "name": "Mega Blastoise",
             "dex": 0,
             "roles": [
-                "tank",
                 "bdd"
             ]
         },
@@ -817,7 +735,6 @@
             "name": "Mega Garchomp",
             "dex": 445,
             "roles": [
-                "tank",
                 "bdd"
             ]
         },
@@ -860,7 +777,7 @@
             "name": "Mega Lopunny",
             "dex": 428,
             "roles": [
-                "tank"
+                "otdd"
             ]
         },
         {
@@ -888,7 +805,7 @@
             "name": "Mega Metagross",
             "dex": 0,
             "roles": [
-                "tank"
+                "otdd"
             ]
         },
         {
@@ -959,7 +876,6 @@
             "name": "Mega Steelix",
             "dex": 208,
             "roles": [
-                "tank",
                 "bdd"
             ]
         },
@@ -967,7 +883,6 @@
             "name": "Mega Swampert",
             "dex": 260,
             "roles": [
-                "tank",
                 "bdd"
             ]
         },
@@ -975,7 +890,6 @@
             "name": "Mega Tyranitar",
             "dex": 248,
             "roles": [
-                "tank",
                 "otdd"
             ]
         },
@@ -983,7 +897,6 @@
             "name": "Mega Venusaur",
             "dex": 3,
             "roles": [
-                "tank",
                 "bdd"
             ]
         },
@@ -1019,14 +932,14 @@
             "name": "Mightyena",
             "dex": 262,
             "roles": [
-                "tank"
+                "otdd"
             ]
         },
         {
             "name": "Mismagius",
             "dex": 429,
             "roles": [
-                "tank"
+                "otdd"
             ]
         },
         {
@@ -1082,7 +995,7 @@
             "name": "Omastar",
             "dex": 139,
             "roles": [
-                "tank"
+                "otdd"
             ]
         },
         {
@@ -1166,7 +1079,7 @@
             "name": "Sceptile",
             "dex": 254,
             "roles": [
-                "tank"
+                "otdd"
             ]
         },
         {
@@ -1209,7 +1122,7 @@
             "name": "Shiny Arbok",
             "dex": 24,
             "roles": [
-                "tank"
+                "otdd"
             ]
         },
         {
@@ -1224,7 +1137,7 @@
             "name": "Shiny Beautifly",
             "dex": 267,
             "roles": [
-                "tank"
+                "otdd"
             ]
         },
         {
@@ -1238,7 +1151,6 @@
             "name": "Shiny Blastoise",
             "dex": 0,
             "roles": [
-                "tank",
                 "otdd"
             ]
         },
@@ -1374,7 +1286,7 @@
             "name": "Shiny Fearow",
             "dex": 0,
             "roles": [
-                "tank"
+                "otdd"
             ]
         },
         {
@@ -1402,7 +1314,7 @@
             "name": "Shiny Forretress",
             "dex": 205,
             "roles": [
-                "tank"
+                "otdd"
             ]
         },
         {
@@ -1445,7 +1357,7 @@
             "name": "Shiny Giant Magikarp",
             "dex": 129,
             "roles": [
-                "tank"
+                "otdd"
             ]
         },
         {
@@ -1465,16 +1377,9 @@
         },
         {
             "name": "Shiny Golduck",
-            "dex": 0,
+            "dex": 55,
             "roles": [
                 "otdd"
-            ]
-        },
-        {
-            "name": "Shiny Golem",
-            "dex": 0,
-            "roles": [
-                "tank"
             ]
         },
         {
@@ -1592,7 +1497,7 @@
         },
         {
             "name": "Shiny Klinklang",
-            "dex": 0,
+            "dex": 601,
             "roles": [
                 "tank"
             ]
@@ -1822,7 +1727,7 @@
             "name": "Shiny Qwilfish",
             "dex": 211,
             "roles": [
-                "tank"
+                "otdd"
             ]
         },
         {
@@ -1835,13 +1740,6 @@
         {
             "name": "Shiny Rampardos",
             "dex": 409,
-            "roles": [
-                "bdd"
-            ]
-        },
-        {
-            "name": "Shiny Rhyperior",
-            "dex": 464,
             "roles": [
                 "bdd"
             ]
@@ -1906,7 +1804,6 @@
             "name": "Shiny Snorlax",
             "dex": 0,
             "roles": [
-                "tank",
                 "bdd",
                 "otdd"
             ]
@@ -1931,28 +1828,6 @@
             "dex": 114,
             "roles": [
                 "otdd"
-            ]
-        },
-        {
-            "name": "Shiny Tyranitar",
-            "dex": 248,
-            "roles": [
-                "tank",
-                "bdd"
-            ]
-        },
-        {
-            "name": "Shiny Dragonite",
-            "dex": 149,
-            "roles": [
-                "otdd"
-            ]
-        },
-        {
-            "name": "Shiny Steelix",
-            "dex": 208,
-            "roles": [
-                "tank"
             ]
         },
         {
@@ -2001,7 +1876,7 @@
             "name": "Shiny Vaporeon",
             "dex": 0,
             "roles": [
-                "tank"
+                "otdd"
             ]
         },
         {
@@ -2041,7 +1916,7 @@
         },
         {
             "name": "Shiny Weezing",
-            "dex": 0,
+            "dex": 110,
             "roles": [
                 "tank"
             ]
@@ -2082,13 +1957,6 @@
             ]
         },
         {
-            "name": "Smeargle",
-            "dex": 235,
-            "roles": [
-                "bdd"
-            ]
-        },
-        {
             "name": "Sneasler",
             "dex": 903,
             "roles": [
@@ -2120,7 +1988,7 @@
             "name": "Sylveon",
             "dex": 700,
             "roles": [
-                "tank"
+                "otdd"
             ]
         },
         {
@@ -2197,14 +2065,14 @@
             "name": "Vespiquen",
             "dex": 416,
             "roles": [
-                "tank"
+                "otdd"
             ]
         },
         {
             "name": "Wobbuffet",
             "dex": 202,
             "roles": [
-                "tank"
+                "otdd"
             ]
         },
         {
@@ -2212,13 +2080,6 @@
             "dex": 413,
             "roles": [
                 "bdd"
-            ]
-        },
-        {
-            "name": "Wormadam Steel",
-            "dex": 413,
-            "roles": [
-                "otdd"
             ]
         },
         {
@@ -2249,31 +2110,26 @@
             "name": "Nightmare Terrors",
             "content": "Nightmare Terrors",
             "difficulty": "Nightmare",
-            "leader": "Zardoso",
+            "leader": "Blaine",
             "clan": "volcanic",
             "level": 480,
-            "dex": 9,
-            "leader_poke_name": "Mega Blastoise",
-            "reqLvl": 400,
-            "players": 3,
-            "maxPlayers": 6,
+            "dex": 6,
+            "leader_poke_name": "Shiny Charizard",
+            "reqLvl": 525,
+            "players": 2,
+            "maxPlayers": 4,
             "type": "quests",
-            "comment": "Preciso de OTANKER experiente!",
+            "comment": "full travell",
             "roles": [
                 {
-                    "type": "tank",
+                    "type": "otdd",
                     "filled": true,
-                    "title": "Mega Blastoise (TANKER)"
+                    "title": "Shiny Charizard (OTDD)"
                 },
                 {
                     "type": "otdd",
                     "filled": true,
-                    "title": "Tyranitar (OTDD)"
-                },
-                {
-                    "type": "sot",
-                    "filled": true,
-                    "title": "Clefable (SOT)"
+                    "title": "Shiny Feraligatr (OTDD)"
                 },
                 {
                     "type": "tank",
@@ -2281,12 +2137,7 @@
                     "title": "Vaga Aberta"
                 },
                 {
-                    "type": "bdd",
-                    "filled": false,
-                    "title": "Vaga Aberta"
-                },
-                {
-                    "type": "bdd",
+                    "type": "sot",
                     "filled": false,
                     "title": "Vaga Aberta"
                 }
@@ -2300,18 +2151,18 @@
             "leader": "Misty",
             "clan": "seavell",
             "level": 520,
-            "dex": 143,
-            "leader_poke_name": "Snorlax",
+            "dex": 9,
+            "leader_poke_name": "Shiny Blastoise",
             "reqLvl": 450,
             "players": 1,
-            "maxPlayers": 5,
+            "maxPlayers": 4,
             "type": "quests",
-            "comment": "Rumo ao Entei!",
+            "comment": "bora entei, tanko bem",
             "roles": [
                 {
                     "type": "tank",
                     "filled": true,
-                    "title": "Snorlax (TANKER)"
+                    "title": "Shiny Blastoise"
                 },
                 {
                     "type": "otdd",
@@ -2334,132 +2185,6 @@
                     "title": "Vaga Aberta"
                 }
             ]
-        },
-        {
-            "id": 1,
-            "content": "Nightmare Terrors",
-            "difficulty": "Nightmare",
-            "leader": "Ash",
-            "clan": "orebound",
-            "level": 500,
-            "dex": 6,
-            "leader_poke_name": "Shiny Charizard",
-            "reqLvl": 400,
-            "players": 2,
-            "maxPlayers": 6,
-            "type": "quests",
-            "roles": [
-                {
-                    "type": "tank",
-                    "filled": true,
-                    "title": "Shiny Charizard (Offensive Tank)"
-                },
-                {
-                    "type": "otdd",
-                    "filled": true,
-                    "title": "Electivire (OTDD)"
-                },
-                {
-                    "type": "bdd",
-                    "filled": false,
-                    "title": "Burst DPS"
-                },
-                {
-                    "type": "bdd",
-                    "filled": false,
-                    "title": "Burst DPS"
-                },
-                {
-                    "type": "tank",
-                    "filled": false,
-                    "title": "Tanker"
-                },
-                {
-                    "type": "sot",
-                    "filled": false,
-                    "title": "Support OT"
-                }
-            ],
-            "comment": "Run rápida, venham com helds T7+."
-        },
-        {
-            "id": 2,
-            "content": "Koga Quest",
-            "difficulty": "Hard",
-            "leader": "Brock",
-            "clan": "ironhard",
-            "level": 450,
-            "dex": 9,
-            "leader_poke_name": "Blastoise",
-            "reqLvl": 350,
-            "players": 3,
-            "maxPlayers": 4,
-            "type": "quests",
-            "roles": [
-                {
-                    "type": "tank",
-                    "filled": true,
-                    "title": "Blastoise (Tanker)"
-                },
-                {
-                    "type": "otdd",
-                    "filled": true,
-                    "title": "Alakazam (OTDD)"
-                },
-                {
-                    "type": "bdd",
-                    "filled": true,
-                    "title": "Gengar (BDD)"
-                },
-                {
-                    "type": "sot",
-                    "filled": false,
-                    "title": "Support OT"
-                }
-            ],
-            "comment": "Apenas Ironhard e Orebound."
-        },
-        {
-            "id": 3,
-            "content": "Embedded Tower",
-            "difficulty": "Normal",
-            "leader": "Blue",
-            "clan": "orebound",
-            "level": 550,
-            "dex": 208,
-            "leader_poke_name": "Mega Steelix",
-            "reqLvl": 450,
-            "players": 4,
-            "maxPlayers": 5,
-            "type": "quests",
-            "roles": [
-                {
-                    "type": "tank",
-                    "filled": true,
-                    "title": "Mega Steelix (Offensive Tank)"
-                },
-                {
-                    "type": "sot",
-                    "filled": true,
-                    "title": "Aromatisse (SOT)"
-                },
-                {
-                    "type": "bdd",
-                    "filled": true,
-                    "title": "Shiny Machamp (BDD)"
-                },
-                {
-                    "type": "otdd",
-                    "filled": true,
-                    "title": "Shiny Gengar (OTDD)"
-                },
-                {
-                    "type": "bdd",
-                    "filled": false,
-                    "title": "Burst DPS"
-                }
-            ],
-            "comment": "Suicune run, precisa de muito dano."
         }
     ]
 }

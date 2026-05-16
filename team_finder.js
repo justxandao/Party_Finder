@@ -27,7 +27,7 @@ async function initApp() {
         const contentsResponse = await fetch('contents_data.json');
         const contentsJson = await contentsResponse.json();
         contentsData = contentsJson.contents;
-        
+
         renderTeams();
         setupFilters();
         setupCreationModal();
@@ -61,25 +61,25 @@ function getPokeImg(dex, name) {
     if (!dex) return "assets/images_ui/pokeball_empty.png";
     const padded = dex.toString().padStart(3, '0');
     let variant = "";
-    
+
     if (name) {
         const n = name.toLowerCase();
         if (n.includes("shiny")) variant = ".1";
         else if (n.includes("mega x")) variant = ".2";
         else if (n.includes("mega y")) variant = ".3";
-        else if (n.includes("mega")) variant = ".2"; 
+        else if (n.includes("mega")) variant = ".2";
         else if (n.includes("alolan")) variant = ".1";
     }
-    
+
     return `assets/pokemons/${padded}${variant}.png`;
 }
 
 function getRoleIcon(type, filled) {
-    if (!filled) return ''; 
-    
+    if (!filled) return '';
+
     const roleData = appData.roles.find(r => r.id === type);
     const iconPath = roleData ? roleData.icon : 'assets/icons/pve_tanker.png';
-    
+
     return `<img src="${iconPath}" class="role-img" style="width:28px;">`;
 }
 
@@ -168,7 +168,7 @@ function renderTeams(query = "", type = "all") {
                 </div>
 
                 <div class="col-reqs reqs-info">
-                    <div style="display: flex; flex-direction: column;">
+                    <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
                         <span style="font-weight: 500;">Lvl ${team.reqLvl}+</span>
                         <span style="font-size: 0.75rem; color: #777;">${team.players}/${team.maxPlayers} Jogadores</span>
                     </div>
@@ -213,7 +213,7 @@ function openDetailsModal(teamId) {
         const roleId = p.roles.length > 0 ? p.roles[0].type : 'otdd';
         const helds = getHeldsForRole(roleId);
         const heldsHtml = helds.map(h => `<img src="${h.img}" style="width:32px; height:32px; border:1px solid #333; border-radius:4px;" title="${h.name}">`).join('');
-        
+
         return `
             <div class="player-detail-card-premium">
                 <div class="pdc-header">
@@ -293,7 +293,7 @@ function openApplyModal(teamId) {
     const openRoles = team.roles.filter(r => !r.filled);
     container.innerHTML = openRoles.map(r => `
         <button class="role-btn" onclick="selectApplyRole('${r.type}', this)">
-            <div class="role-btn-icon"><img src="${appData.roles.find(role => role.id === r.type).icon}" style="width:28px;"></div>
+            <div class="role-btn-icon"><img src="${appData.roles.find(role => role.id === r.type).icon}" style="width:20px;"></div>
             <span>${getRoleName(r.type)}</span>
         </button>
     `).join('');
@@ -371,9 +371,9 @@ function filterPicker() {
         <div class="picker-item" onclick="selectPokemonFromPicker('${p.name}')">
             <div class="picker-poke-roles">
                 ${p.roles.map(rid => {
-                    const r = appData.roles.find(role => role.id === rid);
-                    return `<img src="${r ? r.icon : ''}" title="${getRoleName(rid)}" style="width:14px; height:14px;">`;
-                }).join('')}
+        const r = appData.roles.find(role => role.id === rid);
+        return `<img src="${r ? r.icon : ''}" title="${getRoleName(rid)}" style="width:14px; height:14px;">`;
+    }).join('')}
             </div>
             <img src="${getPokeImg(p.dex, p.name)}" class="picker-poke-img">
             <div class="picker-poke-name">${p.name}</div>
@@ -421,10 +421,10 @@ function confirmPokemonSelection() {
         alert("Por favor, selecione um Pokémon primeiro.");
         return;
     }
-    
+
     const roleSelect = activeRowForPicker.querySelector('.role-select');
     const targetRole = roleSelect ? roleSelect.value : selectedApplyRole;
-    
+
     if (targetRole && targetRole !== 'any' && !selectedPokemon.roles.includes(targetRole)) {
         alert(`Este Pokémon não suporta a função selecionada (${targetRole.toUpperCase()}). Escolha outro Pokémon ou mude a função.`);
         return;
@@ -444,7 +444,7 @@ function confirmPokemonSelection() {
 
         const helds = getHeldsForRole(selectedApplyRole || 'otdd');
         heldsContainer.innerHTML = helds.map(h => `
-            <img src="${h.img}" style="width:32px; height:32px; border:1px solid #333; border-radius:4px;" title="${h.name}">
+            <img src="${h.img}" style="width:36px; height:36px; border:1px solid #333; border-radius:4px;" title="${h.name}">
         `).join('');
 
         checkApplyValidity();
@@ -517,43 +517,40 @@ function addDynamicRoleRow() {
     const list = document.getElementById('creationRolesList');
     const row = document.createElement('div');
     row.className = 'dynamic-role-row';
-    
+
     if (!appData) return;
-    const defaultRole = appData.roles[0];
-    let roleOptions = appData.roles.map(r => `<option value="${r.id}">${r.name}</option>`).join('');
+
+    let roleIconsHtml = appData.roles.map(r => `
+        <div class="creator-role-toggle" data-role="${r.id}" title="${r.name}" onclick="toggleCreatorRole(this)">
+            <img src="${r.icon}">
+        </div>
+    `).join('');
 
     row.innerHTML = `
-        <div class="role-row-icon"><img src="${defaultRole.icon}" class="role-icon-preview"></div>
-        <select class="role-select" style="flex: 1;">${roleOptions}</select>
-        <div class="role-row-poke-picker" onclick="openPickerModal(this.parentElement)" style="flex: 2;">
+        <div class="creator-roles-container">
+            ${roleIconsHtml}
+        </div>
+        <div class="role-row-poke-picker" onclick="openPickerModal(this.parentElement)" style="flex: 1;">
             <img src="assets/images_ui/pokeball_empty.png" class="poke-icon-preview" style="width:20px;">
             <span class="poke-select" data-dex="" data-name="">Selecionar Pokémon...</span>
         </div>
     `;
     list.appendChild(row);
 
-    const roleSelect = row.querySelector('.role-select');
-    const roleIcon = row.querySelector('.role-icon-preview');
+    // Default first role as active
+    const firstRole = row.querySelector('.creator-role-toggle');
+    if (firstRole) firstRole.classList.add('active');
+}
 
-    roleSelect.addEventListener('change', (e) => {
-        const selectedRole = appData.roles.find(r => r.id === e.target.value);
-        if (selectedRole) roleIcon.src = selectedRole.icon;
-        const pokeSelect = row.querySelector('.poke-select');
-        const pokeIcon = row.querySelector('.poke-icon-preview');
-        if (pokeSelect) {
-            pokeSelect.dataset.dex = "";
-            pokeSelect.dataset.name = "";
-            pokeSelect.innerText = "Selecionar Pokémon...";
-        }
-        if (pokeIcon) pokeIcon.src = "assets/images_ui/pokeball_empty.png";
-    });
+function toggleCreatorRole(elem) {
+    elem.classList.toggle('active');
 }
 
 function createNeededRoleRow() {
     const list = document.getElementById('neededRoleList');
     const row = document.createElement('div');
     row.className = 'dynamic-role-row needed-role-row';
-    
+
     if (!appData) return;
     const defaultRole = appData.roles[0];
     let roleOptions = appData.roles.map(r => `<option value="${r.id}">${r.name}</option>`).join('');
@@ -582,28 +579,34 @@ function createNeededRoleRow() {
 function createGroup() {
     const contentId = document.getElementById('createContent').value;
     const selectedContent = contentsData.find(c => c.id === contentId);
-    
+
     const contentName = selectedContent ? selectedContent.name : "Novo Grupo";
     const contentDifficulty = selectedContent ? selectedContent.difficulty : "Normal";
     const contentType = selectedContent ? selectedContent.category : "quests";
 
     const comment = document.getElementById('createComment').value || "Bora grupo!";
     const reqLvl = parseInt(document.getElementById('createReqLvl').value) || 100;
-    
+
     const roleRows = document.querySelectorAll('.dynamic-role-row:not(.needed-role-row)');
     const neededRoleRows = document.querySelectorAll('.needed-role-row');
     const newRoles = [];
 
     roleRows.forEach(row => {
-        const roleId = row.querySelector('.role-select').value;
+        const activeToggles = row.querySelectorAll('.creator-role-toggle.active');
+        const roleIds = activeToggles.length > 0
+            ? Array.from(activeToggles).map(t => t.dataset.role)
+            : ['otdd']; // Default fallback
+
         const pokeSelect = row.querySelector('.poke-select');
         const pokeDex = pokeSelect.dataset.dex;
         const pokeName = pokeSelect.dataset.name || "Qualquer";
 
-        newRoles.push({
-            type: roleId,
-            filled: !!pokeDex,
-            title: pokeName !== "Qualquer" ? `${pokeName} (${roleId.toUpperCase()})` : getRoleName(roleId)
+        roleIds.forEach(roleId => {
+            newRoles.push({
+                type: roleId,
+                filled: !!pokeDex,
+                title: pokeName !== "Qualquer" ? `${pokeName} (${roleId.toUpperCase()})` : getRoleName(roleId)
+            });
         });
     });
 
@@ -649,7 +652,7 @@ function createGroup() {
 function getHeldsForRole(roleType) {
     const isDefensive = roleType === 'tank' || roleType === 'otanker';
     const tier = Math.random() > 0.5 ? '7' : '8';
-    
+
     if (isDefensive) {
         return [
             { name: 'X-Defense', img: `assets/held item/def${tier}.png` },

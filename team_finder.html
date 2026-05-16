@@ -36,7 +36,7 @@
                         <option value="all">Todas as Categorias</option>
                         <option value="quests">Quests / Aventuras</option>
                         <option value="pve">PvE / Hunts</option>
-                        <option value="pvp">PvP / Torneios</option>
+
                     </select>
                     <i class="fa-solid fa-chevron-down select-icon"></i>
                 </div>
@@ -47,10 +47,8 @@
                     <i class="fa-solid fa-magnifying-glass search-icon"></i>
                     <input type="text" placeholder="Buscar líder, pokémon, tags..">
                 </div>
-                <button class="icon-btn" title="Configurações"><i class="fa-solid fa-cog"></i></button>
-                <button class="icon-btn" title="Recarregar" onclick="location.reload()"><i class="fa-solid fa-sync-alt"></i></button>
                 <button class="action-btn highlight-btn" id="createTeamBtn">
-                    <i class="fa-solid fa-plus-circle"></i> Criar um Time
+                    Criar Grupo
                 </button>
             </div>
         </div>
@@ -58,10 +56,11 @@
         <!-- Lista de Equipes -->
         <div class="team-list-container">
             <div class="list-header">
-                <div>Líder</div>
-                <div>Requisitos</div>
-                <div>Composição (Funções)</div>
-                <div></div> <!-- Ações -->
+                <div>Conteúdo</div>
+                <div>Líder do Grupo</div>
+                <div style="text-align: center;">Requisitos</div>
+                <div style="text-align: center;">Composição (Funções)</div>
+                <div style="text-align: right; padding-right: 20px;">Ação</div>
             </div>
 
             <div id="teamList">
@@ -75,8 +74,7 @@
         <div class="modal-window">
             <div class="header">
                 <div class="header-title">
-                    <i class="fa-solid fa-plus-circle title-icon"></i>
-                    <span>Anunciar Novo Grupo</span>
+                    <span>Criar Grupo</span>
                 </div>
                 <i class="fa-solid fa-xmark close-icon"></i>
             </div>
@@ -89,17 +87,18 @@
                 <div class="form-group">
                     <label class="modal-section-label">Conteúdo do Grupo</label>
                     <div class="custom-select" style="width: 100%;">
-                        <select id="createContent" style="width: 100%; background: #080808; border: 1px solid #222; color: #fff; padding: 10px 35px 10px 15px; border-radius: 6px; outline: none; appearance: none; font-family: inherit;">
+                        <select id="createContent"
+                            style="width: 100%; background: #080808; border: 1px solid #222; color: #fff; padding: 10px 35px 10px 15px; border-radius: 6px; outline: none; appearance: none; font-family: inherit;">
                             <!-- Injetado via JS -->
                         </select>
                         <i class="fa-solid fa-chevron-down select-icon" style="right: 15px;"></i>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label class="modal-section-label">Level Mínimo</label>
-                    <input type="number" id="createReqLvl" value="400" 
-                           style="width: 100%; background: #080808; border: 1px solid #222; color: #fff; padding: 10px; border-radius: 6px;">
+                    <input type="number" id="createReqLvl" value="400"
+                        style="width: 100%; background: #080808; border: 1px solid #222; color: #fff; padding: 10px; border-radius: 6px;">
                 </div>
 
                 <div class="form-group">
@@ -114,15 +113,16 @@
                     <div id="neededRoleList" style="margin-bottom: 10px;">
                         <!-- Vagas adicionais aparecerão aqui -->
                     </div>
-                    <button class="action-btn btn-ghost" id="addNeededRoleBtn" style="width: 100%; justify-content: center; border-style: dashed;">
+                    <button class="action-btn btn-ghost" id="addNeededRoleBtn"
+                        style="width: 100%; justify-content: center; border-style: dashed;">
                         <i class="fa-solid fa-plus"></i> Adicionar Vaga de Função
                     </button>
                 </div>
 
                 <div class="form-group">
                     <label class="modal-section-label">Comentário Adicional</label>
-                    <textarea id="createComment" placeholder="Tragam helds de dano, rush 5x.." 
-                              style="width: 100%; background: #080808; border: 1px solid #222; color: #fff; padding: 10px; border-radius: 6px; height: 60px; resize: none;"></textarea>
+                    <textarea id="createComment" placeholder="Escreva algo aqui..."
+                        style="width: 100%; background: #080808; border: 1px solid #222; color: #fff; padding: 10px; border-radius: 6px; height: 60px; resize: none;"></textarea>
                 </div>
             </div>
 
@@ -177,9 +177,11 @@
                 <div class="separator"></div>
             </div>
 
-            <div class="modal-footer" style="padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; background: #080808;">
+            <div class="modal-footer"
+                style="padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; background: #080808;">
                 <div id="selectedPokeInfo" style="display: flex; align-items: center; gap: 10px;">
-                    <div style="width: 40px; height: 40px; background: #111; border: 1px solid #333; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                    <div
+                        style="width: 40px; height: 40px; background: #111; border: 1px solid #333; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
                         <img id="selectedPokeImg" src="" style="width: 32px; height: 32px; display: none;">
                     </div>
                     <div style="display: flex; flex-direction: column;">
@@ -187,7 +189,8 @@
                         <div id="selectedPokeHelds" style="display: flex; gap: 4px; margin-top: 2px;"></div>
                     </div>
                 </div>
-                <button class="action-btn highlight-btn" id="confirmPokeBtn" onclick="confirmPokemonSelection()" disabled>Confirmar</button>
+                <button class="action-btn highlight-btn" id="confirmPokeBtn" onclick="confirmPokemonSelection()"
+                    disabled>Confirmar</button>
             </div>
         </div>
     </div>
@@ -202,7 +205,9 @@
                 </div>
                 <i class="fa-solid fa-xmark close-icon" onclick="closeApplyModal()"></i>
             </div>
-            <div class="separator-container"><div class="separator"></div></div>
+            <div class="separator-container">
+                <div class="separator"></div>
+            </div>
             <div class="modal-body" style="padding: 20px; display: flex; flex-direction: column; gap: 20px;">
                 <div>
                     <label class="modal-section-label">Escolha sua Função</label>
@@ -212,19 +217,25 @@
                 </div>
                 <div>
                     <label class="modal-section-label">Seu Pokémon</label>
-                    <div class="role-row-poke-picker" id="applyPokePicker" onclick="openPickerModal(this)" style="padding: 12px; background: #080808;">
-                        <img id="applyPokeIcon" src="assets/images_ui/pokeball_empty.png" style="width:30px;">
-                        <div style="display: flex; flex-direction: column;">
-                            <span id="applyPokeName" style="color: #eee; font-weight: 600;">Selecionar Pokémon...</span>
-                            <div id="applyPokeHelds" style="display: flex; gap: 4px; margin-top: 4px;"></div>
+                    <div class="role-row-poke-picker" id="applyPokePicker" onclick="openPickerModal(this)"
+                        style="padding: 15px; background: #080808; display: flex; align-items: center; gap: 20px;">
+                        <img id="applyPokeIcon" src="assets/images_ui/pokeball_empty.png"
+                            style="width:64px; height:64px; object-fit: contain;">
+                        <div style="display: flex; flex-direction: column; gap: 5px;">
+                            <span id="applyPokeName"
+                                style="color: #eee; font-weight: 700; font-size: 1.1rem;">Selecionar Pokémon...</span>
+                            <div id="applyPokeHelds" style="display: flex; gap: 8px; margin-top: 2px;"></div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="separator-container"><div class="separator"></div></div>
+            <div class="separator-container">
+                <div class="separator"></div>
+            </div>
             <div class="modal-footer" style="padding: 15px 20px; display: flex; justify-content: flex-end; gap: 10px;">
                 <button class="action-btn btn-ghost" onclick="closeApplyModal()">Cancelar</button>
-                <button class="action-btn highlight-btn" id="sendApplyBtn" onclick="submitApplication()" disabled>Enviar Solicitação</button>
+                <button class="action-btn highlight-btn" id="sendApplyBtn" onclick="submitApplication()" disabled>Enviar
+                    Solicitação</button>
             </div>
         </div>
     </div>
@@ -237,34 +248,86 @@
                     <i class="fa-solid fa-users title-icon"></i>
                     <span>Solicitações Pendentes</span>
                 </div>
-                <i class="fa-solid fa-xmark close-icon" onclick="document.getElementById('applicantsModal').classList.remove('active')"></i>
+                <i class="fa-solid fa-xmark close-icon"
+                    onclick="document.getElementById('applicantsModal').classList.remove('active')"></i>
             </div>
-            <div class="separator-container"><div class="separator"></div></div>
-            <div class="modal-body" style="background: #0b0b0b; padding: 20px; flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px;">
-                <!-- Exemplo de Player 1 -->
+            <div class="separator-container">
+                <div class="separator"></div>
+            </div>
+            <div class="modal-body"
+                style="background: #0b0b0b; padding: 15px; flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 4px;">
+
+                <!-- Exemplo de Player 1 (Brock) -->
                 <div class="applicant-row-premium">
-                    <div class="arp-top" style="display: flex; gap: 20px; margin-bottom: 15px;">
-                        <div style="flex: 1;"><label style="color:#555; font-size:0.7rem; text-transform:uppercase;">Função</label><div style="color:#eee; font-weight:600;">Damage</div></div>
-                        <div style="flex: 1;"><label style="color:#555; font-size:0.7rem; text-transform:uppercase;">Pokémon</label><div style="color:#eee; font-weight:600;">Shiny Granbull</div></div>
-                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/210.png" style="width:40px; height:40px;">
+                    <div style="display: flex; align-items: center; gap: 10px; min-width: 170px;">
+                        <img src="assets/clans/orebound.png" style="width:24px; height: 24px;" title="Orebound">
+                        <div style="display: flex; flex-direction: column;">
+                            <div style="color:#faba4d; font-weight:700; font-size: 1rem;">Brock</div>
+                            <div style="color:#666; font-size:0.75rem; font-weight: 500;">Level 550</div>
+                        </div>
                     </div>
-                    <div class="arp-bottom" style="display: flex; justify-content: space-between; align-items: center;">
-                        <div class="pdc-header" style="gap: 10px;">
-                            <img src="assets/clans/ironhard.png" class="arp-clan-icon">
-                            <img src="assets/icons/pve_burst_damage_dealer.png" style="width:24px;">
-                            <div class="arp-name-bar">
-                                <div style="color:#faba4d; font-weight:600;">Joasilva <span style="color:#666; font-size:0.8rem;">Lvl 580</span></div>
-                                <div style="width: 150px; height: 4px; background: #222; border-radius: 2px; margin-top: 4px;"><div style="width: 85%; height: 100%; background: #3b82f6;"></div></div>
+
+                    <div style="display: flex; align-items: center; gap: 10px; flex: 1;">
+                        <img src="assets/pokemons/105.1.png" style="width:48px; height:48px; object-fit: contain;">
+                        <div style="display: flex; flex-direction: column;">
+                            <span style="color:#eee; font-weight:600; font-size: 0.95rem;">Shiny Marowak</span>
+                            <div style="display: flex; align-items: center; gap: 5px;">
+                                <img src="assets/icons/pve_over_time_damage_dealer.png" style="width:16px;">
+                                <span
+                                    style="font-size: 0.7rem; color: #888; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">OTDD</span>
                             </div>
                         </div>
-                        <div class="arp-actions" style="display: flex; gap: 15px;">
-                            <i class="fa-solid fa-circle-check arp-icon-btn accept"></i>
-                            <i class="fa-solid fa-circle-xmark arp-icon-btn decline"></i>
+                    </div>
+
+                    <div style="display: flex; gap: 6px; align-items: center; margin-left: 10px;">
+                        <div class="large-held-slot"><img src="assets/held item/atk8.png"></div>
+                        <div class="large-held-slot"><img src="assets/held item/Ghost.png"></div>
+                    </div>
+
+                    <div class="arp-actions"
+                        style="display: flex; gap: 15px; align-items: center; border-left: 1px solid #222; padding-left: 20px; margin-left: 10px;">
+                        <i class="fa-solid fa-check arp-icon-btn accept" onclick="event.stopPropagation();"></i>
+                        <i class="fa-solid fa-xmark arp-icon-btn decline" onclick="event.stopPropagation();"></i>
+                    </div>
+                </div>
+
+                <!-- Exemplo de Player 3 (Alrik) -->
+                <div class="applicant-row-premium">
+                    <div style="display: flex; align-items: center; gap: 10px; min-width: 170px;">
+                        <img src="assets/clans/psycraft.png" style="width:24px; height: 24px;" title="Psycraft">
+                        <div style="display: flex; flex-direction: column;">
+                            <div style="color:#faba4d; font-weight:700; font-size: 1rem;">Alrik</div>
+                            <div style="color:#666; font-size:0.75rem; font-weight: 500;">Level 520</div>
                         </div>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 10px; flex: 1;">
+                        <img src="assets/pokemons/901.png" style="width:48px; height:48px; object-fit: contain;">
+                        <div style="display: flex; flex-direction: column;">
+                            <span style="color:#eee; font-weight:600; font-size: 0.95rem;">Ursaluna</span>
+                            <div style="display: flex; align-items: center; gap: 5px;">
+                                <img src="assets/icons/pve_over_time_damage_dealer.png" style="width:16px;">
+                                <span
+                                    style="font-size: 0.7rem; color: #888; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">OTDD</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 6px; align-items: center; margin-left: 10px;">
+                        <div class="large-held-slot"><img src="assets/held item/atk8.png"></div>
+                        <div class="large-held-slot"><img src="assets/held item/Ghost.png"></div>
+                    </div>
+
+                    <div class="arp-actions"
+                        style="display: flex; gap: 15px; align-items: center; border-left: 1px solid #222; padding-left: 20px; margin-left: 10px;">
+                        <i class="fa-solid fa-check arp-icon-btn accept" onclick="event.stopPropagation();"></i>
+                        <i class="fa-solid fa-xmark arp-icon-btn decline" onclick="event.stopPropagation();"></i>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    </div>
     </div>
 
     <!-- Modal: Detalhes do Grupo -->
@@ -277,7 +340,9 @@
                 </div>
                 <i class="fa-solid fa-xmark close-icon" onclick="closeDetailsModal()"></i>
             </div>
-            <div class="separator-container"><div class="separator"></div></div>
+            <div class="separator-container">
+                <div class="separator"></div>
+            </div>
             <div class="modal-body" id="detailsContainer" style="padding: 20px; overflow-y: auto; background: #080808;">
                 <!-- Injetado via JS -->
             </div>
@@ -286,4 +351,5 @@
 
     <script src="team_finder.js"></script>
 </body>
+
 </html>

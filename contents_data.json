@@ -5,48 +5,41 @@
             "name": "Nightmare Terrors (Hard)",
             "category": "quests",
             "difficulty": "Hard",
-            "minLevel": 400
+            "minLevel": 525
         },
         {
             "id": "nightmare_terrors_nightmare",
             "name": "Nightmare Terrors (Nightmare)",
             "category": "quests",
             "difficulty": "Nightmare",
-            "minLevel": 400
+            "minLevel": 600
         },
         {
             "id": "legendary_beasts_easy",
             "name": "Legendary Beasts (Easy)",
             "category": "quests",
             "difficulty": "Easy",
-            "minLevel": 450
+            "minLevel": 200
         },
         {
             "id": "legendary_beasts_medium",
             "name": "Legendary Beasts (Medium)",
             "category": "quests",
             "difficulty": "Medium",
-            "minLevel": 450
+            "minLevel": 350
         },
         {
             "id": "legendary_beasts_hard",
             "name": "Legendary Beasts (Hard)",
             "category": "quests",
             "difficulty": "Hard",
-            "minLevel": 450
+            "minLevel": 400
         },
         {
             "id": "koga_quest",
             "name": "Koga Quest",
             "category": "quests",
             "difficulty": "Normal",
-            "minLevel": 300
-        },
-        {
-            "id": "mewtwo_main",
-            "name": "Mewtwo Main Quest",
-            "category": "quests",
-            "difficulty": "Hard",
             "minLevel": 400
         },
         {
@@ -54,21 +47,7 @@
             "name": "Embedded Tower",
             "category": "quests",
             "difficulty": "Hard",
-            "minLevel": 350
-        },
-        {
-            "id": "stacy_quest",
-            "name": "Stacy Quest",
-            "category": "quests",
-            "difficulty": "Normal",
-            "minLevel": 200
-        },
-        {
-            "id": "sarkies_quest",
-            "name": "Sarkies Quest",
-            "category": "quests",
-            "difficulty": "Normal",
-            "minLevel": 200
+            "minLevel": 450
         },
         {
             "id": "daily_bosses",
@@ -78,25 +57,18 @@
             "minLevel": 100
         },
         {
+            "id": "subject#14",
+            "name": "Subject #14",
+            "category": "pve",
+            "difficulty": "Normal",
+            "minLevel": 400
+        },
+        {
             "id": "tower_challenge",
             "name": "Tower Challenge",
             "category": "pve",
             "difficulty": "Hard",
             "minLevel": 500
-        },
-        {
-            "id": "tournament_100",
-            "name": "Tournament Lvl 100",
-            "category": "pvp",
-            "difficulty": "Normal",
-            "minLevel": 100
-        },
-        {
-            "id": "tournament_unlimited",
-            "name": "Tournament Unlimited",
-            "category": "pvp",
-            "difficulty": "Hard",
-            "minLevel": 1
         }
     ]
 }
