@@ -6,9 +6,9 @@
 const availableRoles = [
     { id: 'tank', name: 'Tanker', icon: 'assets/icons/pve_tanker.png' },
     { id: 'otanker', name: 'Offensive Tanker', icon: 'assets/icons/pve_offensive_tanker.png' },
-    { id: 'otdd', name: 'Over Time DD', icon: 'assets/icons/pve_over_time_damage_dealer.png' },
-    { id: 'bdd', name: 'Burst DD', icon: 'assets/icons/pve_burst_damage_dealer.png' },
-    { id: 'sot', name: 'Support OT', icon: 'assets/icons/pve_support_over_time.png' }
+    { id: 'otdd', name: 'Over Time Damage Dealer', icon: 'assets/icons/pve_over_time_damage_dealer.png' },
+    { id: 'bdd', name: 'Burst Damage Dealer', icon: 'assets/icons/pve_burst_damage_dealer.png' },
+    { id: 'sot', name: 'Support Over Time', icon: 'assets/icons/pve_support_over_time.png' }
 ];
 
 const availablePokemons = [

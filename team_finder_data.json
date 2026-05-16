@@ -7,17 +7,17 @@
         },
         {
             "id": "otdd",
-            "name": "Over Time DD",
+            "name": "Over Time Damage Dealer",
             "icon": "assets/icons/pve_over_time_damage_dealer.png"
         },
         {
             "id": "bdd",
-            "name": "Burst DD",
+            "name": "Burst Damage Dealer",
             "icon": "assets/icons/pve_burst_damage_dealer.png"
         },
         {
             "id": "sot",
-            "name": "Support OT",
+            "name": "Support Over Time",
             "icon": "assets/icons/pve_support_over_time.png"
         }
     ],
