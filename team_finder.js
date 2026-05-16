@@ -121,11 +121,9 @@ function renderTeams(query = "", type = "all") {
             </div>
         `).join('');
 
-        const leaderRole = team.roles.find(r => r.filled && r.title.includes(team.leader));
-        let pokeName = team.leader_poke_name;
-        if (!pokeName && leaderRole) {
-            pokeName = leaderRole.title.split(' (')[0];
-        }
+        // Encontrar a função do líder de forma mais robusta
+        let leaderRole = team.roles.find(r => r.filled && r.title.includes(team.leader));
+        if (!leaderRole) leaderRole = team.roles.find(r => r.filled); // Fallback para o primeiro preenchido
 
         const roleId = leaderRole ? leaderRole.type : 'otdd';
         const helds = team.helds || getHeldsForRole(roleId, team.leader);
@@ -225,7 +223,10 @@ function openDetailsModal(teamId) {
     const modal = document.getElementById('teamDetailsModal');
     const container = document.getElementById('detailsTeamTitle').parentElement.parentElement.querySelector('.modal-body');
 
-    const leaderRole = team.roles.find(r => r.filled && r.title.includes(team.leader));
+    // Melhorar detecção da função do líder
+    let leaderRole = team.roles.find(r => r.filled && r.title.includes(team.leader));
+    if (!leaderRole) leaderRole = team.roles.find(r => r.filled);
+    
     let pokeName = team.leader_poke_name;
     if (!pokeName && leaderRole) {
         pokeName = leaderRole.title.split(' (')[0];
@@ -348,6 +349,17 @@ function selectApplyRole(roleId, btn) {
     selectedApplyRole = roleId;
     document.querySelectorAll('#applyRoleContainer .role-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+    
+    // Atualizar helds se já houver pokemon selecionado
+    const pokeNameElem = document.getElementById('applyPokeName');
+    if (pokeNameElem && pokeNameElem.dataset.name) {
+        const heldsContainer = document.getElementById('applyPokeHelds');
+        const helds = getHeldsForRole(roleId, "Xandy");
+        heldsContainer.innerHTML = helds.map(h => `
+            <img src="${h.img}" style="width:36px; height:36px; border:1px solid #333; border-radius:4px;" title="${h.name}">
+        `).join('');
+    }
+    
     checkApplyValidity();
 }
 
@@ -364,6 +376,8 @@ function submitApplication() {
 // --- Pokemon Picker ---
 function openPickerModal(row) {
     activeRowForPicker = row;
+    selectedPokemon = null;
+    selectedHelds = [];
     document.getElementById('pokemonPickerModal').classList.add('active');
 
     const roleSelect = row.querySelector('.role-select');
@@ -433,6 +447,8 @@ function selectPokemonFromPicker(pokeName) {
         roleId = roleSelect.value;
     } else if (selectedApplyRole) {
         roleId = selectedApplyRole;
+    } else if (poke.roles && poke.roles.length > 0) {
+        roleId = poke.roles[0];
     }
 
     selectedHelds = getHeldsForRole(roleId);
@@ -716,6 +732,18 @@ function createNeededRoleRow() {
     roleSelect.addEventListener('change', (e) => {
         const selectedRole = appData.roles.find(r => r.id === e.target.value);
         if (selectedRole) roleIcon.src = selectedRole.icon;
+        
+        // Atualizar helds se já houver pokemon selecionado
+        const pokeSelect = row.querySelector('.poke-select');
+        if (pokeSelect && pokeSelect.dataset.name) {
+            const heldsContainer = row.querySelector('.creator-poke-helds');
+            if (heldsContainer) {
+                const helds = getHeldsForRole(e.target.value, "Xandy");
+                heldsContainer.innerHTML = helds.map(h => `
+                    <img src="${h.img}" title="${h.name}" style="width:24px; height:24px; border:1px solid #333; border-radius:2px;">
+                `).join('');
+            }
+        }
     });
 
     row.querySelector('.remove-role-btn').addEventListener('click', () => {
@@ -797,7 +825,7 @@ function createGroup() {
 
 // --- Helpers ---
 function getHeldsForRole(roleType, playerName = "Xandy") {
-    // Deterministic seed based on player name to keep helds consistent
+    // Semente determinística baseada no nome para manter consistência
     let seed = 0;
     for (let i = 0; i < playerName.length; i++) seed += playerName.charCodeAt(i);
     
@@ -806,22 +834,21 @@ function getHeldsForRole(roleType, playerName = "Xandy") {
         return seed / 233280;
     };
 
-    const isDefensive = roleType.toLowerCase().includes('tank');
+    const roleLower = roleType.toLowerCase();
+    const isDefensive = roleLower.includes('tank') || roleLower.includes('defen') || roleLower.includes('otanker');
+    
     const tier = pseudoRandom() > 0.5 ? '7' : '8';
-    
-    // Randomize primary held type but keep it stable for the same name
-    const defTypes = ['def', 'Ghost'];
-    const atkTypes = ['atk'];
-    
-    const types = isDefensive ? defTypes : atkTypes;
-    const t1 = types[Math.floor(pseudoRandom() * types.length)];
+    const prefix = isDefensive ? 'def' : 'atk';
+    const primaryName = isDefensive ? 'X-Defense' : 'X-Attack';
     
     const helds = [];
-    if (t1 === 'Ghost') {
+    const r = pseudoRandom();
+    
+    if (r > 0.5) {
         helds.push({ name: 'Ghost', img: 'assets/held item/Ghost.png' });
-        helds.push({ name: isDefensive ? 'X-Defense' : 'X-Attack', img: `assets/held item/${isDefensive ? 'def' : 'atk'}${tier}.png` });
+        helds.push({ name: primaryName, img: `assets/held item/${prefix}${tier}.png` });
     } else {
-        helds.push({ name: isDefensive ? 'X-Defense' : 'X-Attack', img: `assets/held item/${t1}${tier}.png` });
+        helds.push({ name: primaryName, img: `assets/held item/${prefix}${tier}.png` });
         helds.push({ name: 'Ghost', img: 'assets/held item/Ghost.png' });
     }
     

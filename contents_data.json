@@ -64,11 +64,11 @@
             "minLevel": 400
         },
         {
-            "id": "tower_challenge",
-            "name": "Tower Challenge",
+            "id": "shiny_giant_tentacruel",
+            "name": "Shiny Giant Tentacruel",
             "category": "pve",
             "difficulty": "Hard",
-            "minLevel": 500
+            "minLevel": 400
         }
     ]
 }

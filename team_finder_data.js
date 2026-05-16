@@ -107,7 +107,6 @@ const availablePokemons = [
     { dex: 863, name: 'Perrserker', roles: ["bdd"], isShiny: false },
     { dex: 18, name: 'Pidgeot', roles: ["bdd"], isShiny: false },
     { dex: 474, name: 'Porygon-Z', roles: ["otdd"], isShiny: false },
-    { dex: 668, name: 'Pyroar Female', roles: ["tank"], isShiny: true },
     { dex: 26, name: 'Raichu', roles: ["bdd"], isShiny: false },
     { dex: 409, name: 'Rampardos', roles: ["bdd"], isShiny: false },
     { dex: 407, name: 'Roserade', roles: ["bdd"], isShiny: false },
