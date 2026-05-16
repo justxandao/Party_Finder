@@ -261,6 +261,23 @@ body::before {
     letter-spacing: 1px;
 }
 
+.list-header .col-reqs,
+.list-header .col-action {
+    text-align: center;
+}
+
+.col-reqs,
+.col-action {
+    display: flex;
+    justify-content: center;
+}
+
+.col-leader {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 15px;
+}
+
 .team-card {
     display: grid;
     grid-template-columns: 1.5fr 1fr 1fr 1.5fr 0.8fr;
@@ -271,14 +288,108 @@ body::before {
     padding: 15px;
     align-items: center;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Layout quando expandido */
+.team-card.expanded {
+    grid-template-rows: auto 1fr;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-color: #2563eb;
+    padding-bottom: 5px;
+}
+
+.team-expansion-content {
+    grid-column: 1 / -1;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.3s ease, margin 0.3s ease;
+}
+
+.team-card.expanded .team-expansion-content {
+    max-height: 500px;
+    /* Suficiente para os membros */
+    opacity: 1;
+    margin-top: 15px;
+    padding: 15px 5px;
+    border-top: 1px solid #1a1a1a;
+}
+
+.members-expansion-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.member-expansion-item {
+    display: grid;
+    grid-template-columns: 1.5fr 1.5fr 1fr;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 8px 15px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.member-exp-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.member-exp-clan {
+    width: 24px;
+    height: 24px;
+}
+
+.member-exp-name {
+    color: #eee;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.member-exp-lvl {
+    color: #666;
+    font-size: 0.75rem;
+}
+
+.member-exp-poke {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.member-exp-icon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+.member-exp-pokename {
+    color: #aaa;
+    font-size: 0.85rem;
+}
+
+.member-exp-helds {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+.member-exp-helds img {
+    width: 28px;
+    height: 28px;
+    border: 1px solid #333;
+    border-radius: 3px;
 }
 
 .team-card:hover {
     background-color: var(--list-hover);
     border-color: var(--top-line);
-    transform: translateX(4px);
-    box-shadow: -4px 0 0 var(--top-line), 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 999;
 }
 
 .content-title {
@@ -291,6 +402,11 @@ body::before {
 .leader-wrapper {
     position: relative;
     display: inline-block;
+    z-index: 1;
+}
+
+.leader-wrapper:hover {
+    z-index: 1000;
 }
 
 .leader-name {
@@ -308,11 +424,11 @@ body::before {
     position: absolute;
     top: 100%;
     left: 0;
+    z-index: 1000;
     background: #080808;
-    border: 1px solid #333;
-    border-radius: 8px;
-    padding: 12px;
-    z-index: 100;
+    border: 1px solid #222;
+    border-radius: 12px;
+    padding: 15px;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.2s, transform 0.2s;
@@ -452,12 +568,40 @@ body::before {
 
 .modal-window {
     width: 600px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
     position: relative;
     transform: translateY(20px);
     transition: transform 0.2s;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
     border: 20px solid transparent;
     border-image: url('assets/images_ui/mainwindow.png') 25 fill stretch;
+}
+
+.modal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 10px;
+    /* Small horizontal padding for scrollbar */
+}
+
+/* Custom Scrollbar for Modal Body */
+.modal-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 10px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+    background: #444;
 }
 
 .modal-overlay.active .modal-window {
@@ -638,12 +782,6 @@ body::before {
     justify-content: center;
 }
 
-.large-held-slot img {
-    width: 30px;
-    height: 30px;
-    object-fit: contain;
-}
-
 .arp-icon-btn {
     width: 24px;
     height: 24px;
@@ -653,7 +791,6 @@ body::before {
 }
 
 .arp-icon-btn:hover {
-    transform: scale(1.1);
     opacity: 1;
 }
 
@@ -668,15 +805,151 @@ body::before {
 }
 
 .arp-icon-btn.decline:hover {
-    transform: scale(1.15);
     color: #f87171;
 }
 
-.player-detail-card-premium {
+.app-col-player {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 180px;
+}
+
+.app-clan-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.app-player-name {
+    color: #faba4d;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.app-player-lvl {
+    color: #666;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.app-col-poke {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.app-poke-img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+}
+
+.app-poke-name {
+    color: #eee;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.app-role-line {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 2px;
+}
+
+.app-role-name {
+    color: #666;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    font-weight: 800;
+}
+
+.app-col-helds {
+    display: flex;
+    gap: 6px;
+    margin-right: 15px;
+}
+
+.app-held-slot {
+    width: 38px;
+    height: 38px;
     background: #080808;
+    border: 1px solid #222;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.app-held-slot:nth-child(1) {
+    border-color: #2563eb;
+    box-shadow: 0 0 8px rgba(37, 99, 235, 0.2);
+}
+
+.app-held-slot:nth-child(2) {
+    border-color: #9333ea;
+    box-shadow: 0 0 8px rgba(147, 51, 234, 0.2);
+}
+
+.app-held-slot:hover {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+}
+
+.app-held-slot img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+.app-separator {
+    width: 1px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.05);
+    margin: 0 15px;
+}
+
+.app-actions-ghost {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.ghost-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.3rem;
+    padding: 0;
+    transition: transform 0.1s, filter 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ghost-btn.accept {
+    color: #10b981 !important;
+    filter: drop-shadow(0 0 2px rgba(16, 185, 129, 0.3));
+}
+
+.ghost-btn.decline {
+    color: #ef4444 !important;
+    filter: drop-shadow(0 0 2px rgba(239, 68, 68, 0.3));
+}
+
+.ghost-btn:hover {
+    transform: scale(1.3);
+    filter: brightness(1.5) drop-shadow(0 0 5px currentColor);
+}
+
+.player-detail-card-premium {
+    background: #0f0f0f;
     border: 1px solid #1a1a1a;
-    border-radius: 8px;
+    border-radius: 12px;
     padding: 20px;
+    margin-bottom: 15px;
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -892,4 +1165,155 @@ box-shadow: 0 0 15px rgba(37, 99, 235, 0.15);
     width: 20px;
     height: 20px;
     object-fit: contain;
+}
+
+/* Estilos para Candidatos Integrados na Expansão */
+.applicants-expansion-section {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px dashed #333;
+}
+
+.expansion-section-title {
+    color: #555;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.applicants-mini-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.applicant-mini-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(16, 185, 129, 0.03);
+    border: 1px solid rgba(16, 185, 129, 0.1);
+    border-radius: 6px;
+    padding: 8px 15px;
+    transition: all 0.2s;
+}
+
+.applicant-mini-row:hover {
+    background: rgba(16, 185, 129, 0.06);
+    border-color: rgba(16, 185, 129, 0.3);
+}
+
+.app-mini-player {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 180px;
+}
+
+.app-mini-clan {
+    width: 20px;
+    height: 20px;
+}
+
+.app-mini-name {
+    color: #faba4d;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.app-mini-lvl {
+    color: #555;
+    font-size: 0.75rem;
+}
+
+.app-mini-poke {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+}
+
+.app-mini-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.app-mini-pokename {
+    color: #aaa;
+    font-size: 0.8rem;
+}
+
+.app-mini-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.app-mini-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    border: 1px solid #333;
+    background: #111;
+    color: #eee;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+}
+
+.app-mini-btn.accept:hover {
+    background: #10b981;
+    border-color: #10b981;
+    color: #fff;
+}
+
+.app-mini-btn.decline:hover {
+    background: #ef4444;
+    border-color: #ef4444;
+    color: #fff;
+}
+
+/* Botões de Candidato (Padrão Unificado) */
+.applicant-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 4px;
+    border: 1px solid #333;
+    background: #111;
+    color: #eee;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    transition: all 0.2s ease;
+}
+
+.applicant-btn.accept:hover {
+    background: #10b981;
+    border-color: #10b981;
+    color: #fff;
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.3);
+}
+
+.applicant-btn.decline:hover {
+    background: #ef4444;
+    border-color: #ef4444;
+    color: #fff;
+    box-shadow: 0 0 12px rgba(239, 68, 68, 0.3);
+}
+
+.no-applicants-msg {
+    text-align: center;
+    padding: 20px;
+    color: #444;
+    font-size: 0.8rem;
+    font-style: italic;
 }

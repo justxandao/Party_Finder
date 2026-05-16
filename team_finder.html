@@ -59,7 +59,7 @@
                 <div>Conteúdo</div>
                 <div>Líder do Grupo</div>
                 <div style="text-align: center;">Requisitos</div>
-                <div style="text-align: center;">Composição (Funções)</div>
+                <div style="text-align: center;">Composição</div>
                 <div style="text-align: right; padding-right: 20px;">Ação</div>
             </div>
 
@@ -83,46 +83,65 @@
                 <div class="separator"></div>
             </div>
 
-            <div class="modal-body" style="padding: 20px; display: flex; flex-direction: column; gap: 15px;">
-                <div class="form-group">
-                    <label class="modal-section-label">Conteúdo do Grupo</label>
-                    <div class="custom-select" style="width: 100%;">
-                        <select id="createContent"
-                            style="width: 100%; background: #080808; border: 1px solid #222; color: #fff; padding: 10px 35px 10px 15px; border-radius: 6px; outline: none; appearance: none; font-family: inherit;">
-                            <!-- Injetado via JS -->
-                        </select>
-                        <i class="fa-solid fa-chevron-down select-icon" style="right: 15px;"></i>
+            <div class="modal-body">
+                <div style="display: flex; flex-direction: column; gap: 20px; padding: 10px 10px 20px 10px;">
+                    <!-- 1. Configurações (Conteúdo e Nível) -->
+                    <div style="display: grid; grid-template-columns: 1fr 100px 100px; gap: 15px;">
+                        <div class="form-group">
+                            <label class="modal-section-label">Conteúdo do Grupo</label>
+                            <div class="custom-select" style="width: 100%;">
+                                <select id="createContent"
+                                    style="width: 100%; background: #080808; border: 1px solid #222; color: #fff; padding: 10px 35px 10px 15px; border-radius: 6px; outline: none; appearance: none; font-family: inherit;">
+                                    <!-- Injetado via JS -->
+                                </select>
+                                <i class="fa-solid fa-chevron-down select-icon" style="right: 15px;"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="modal-section-label">Lvl Min</label>
+                            <input type="number" id="createReqLvl" value="400"
+                                style="width: 100%; background: #080808; border: 1px solid #222; color: #fff; padding: 10px; border-radius: 6px;">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="modal-section-label">Vagas</label>
+                            <input type="number" id="createMaxPlayers" value="4" min="1" max="10"
+                                style="width: 100%; background: #080808; border: 1px solid #222; color: #fff; padding: 10px; border-radius: 6px;">
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label class="modal-section-label">Level Mínimo</label>
-                    <input type="number" id="createReqLvl" value="400"
-                        style="width: 100%; background: #080808; border: 1px solid #222; color: #fff; padding: 10px; border-radius: 6px;">
-                </div>
-
-                <div class="form-group">
-                    <label class="modal-section-label">Seu Pokémon & Função</label>
-                    <div id="creationRolesList">
-                        <!-- Linha dinâmica do líder -->
+                    <!-- 2. Suas Funções / Pokémons -->
+                    <div style="border-top: 1px solid #1a1a1a; padding-top: 15px;">
+                        <label class="modal-section-label">Suas Funções / Pokémons</label>
+                        <div id="creationRolesList" style="display: flex; flex-direction: column; gap: 10px;">
+                            <!-- Dynamic role slots for creator -->
+                        </div>
+                        <button type="button" class="action-btn" onclick="addDynamicRoleRow()"
+                            style="width: 100%; margin-top: 10px; justify-content: center; background: rgba(37, 99, 235, 0.1); border: 1px solid #2563eb; color: #fff;">
+                            <i class="fa-solid fa-plus"></i> Adicionar Pokémon
+                        </button>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label class="modal-section-label">Vagas Necessárias</label>
-                    <div id="neededRoleList" style="margin-bottom: 10px;">
-                        <!-- Vagas adicionais aparecerão aqui -->
+                    <!-- 3. Vagas Necessárias -->
+                    <div style="border-top: 1px solid #1a1a1a; padding-top: 15px;">
+                        <label class="modal-section-label">Vagas Necessárias (Para o Grupo)</label>
+                        <div id="neededRoleList"
+                            style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px;">
+                            <!-- Vagas em aberto aparecem aqui -->
+                        </div>
+                        <button type="button" class="action-btn" id="addNeededRoleBtn"
+                            style="width: 100%; justify-content: center; background: rgba(255,255,255,0.05); border: 1px dashed #444; border-radius: 8px;">
+                            <i class="fa-solid fa-plus"></i> Adicionar Vaga em Aberto
+                        </button>
                     </div>
-                    <button class="action-btn btn-ghost" id="addNeededRoleBtn"
-                        style="width: 100%; justify-content: center; border-style: dashed;">
-                        <i class="fa-solid fa-plus"></i> Adicionar Vaga de Função
-                    </button>
-                </div>
 
-                <div class="form-group">
-                    <label class="modal-section-label">Comentário Adicional</label>
-                    <textarea id="createComment" placeholder="Escreva algo aqui..."
-                        style="width: 100%; background: #080808; border: 1px solid #222; color: #fff; padding: 10px; border-radius: 6px; height: 60px; resize: none;"></textarea>
+                    <!-- 4. Comentário -->
+                    <div class="form-group" style="border-top: 1px solid #1a1a1a; padding-top: 15px;">
+                        <label class="modal-section-label">Comentário Adicional</label>
+                        <textarea id="createComment" placeholder="Escreva algo aqui..."
+                            style="width: 100%; background: #080808; border: 1px solid #222; color: #fff; padding: 10px; border-radius: 6px; height: 60px; resize: none;"></textarea>
+                    </div>
                 </div>
             </div>
 
@@ -160,10 +179,10 @@
                 <div class="custom-select" style="width: 200px; margin-left: 10px;">
                     <select id="pickerRoleFilter" onchange="filterPicker()">
                         <option value="all">Todas as Funções</option>
-                        <option value="otdd">Over Time DD</option>
-                        <option value="bdd">Burst DD</option>
+                        <option value="otdd">Over Time Damage Dealer</option>
+                        <option value="bdd">Burst Damage Dealer</option>
                         <option value="tank">Tanker</option>
-                        <option value="sot">Support OT</option>
+                        <option value="sot">Support Over Time</option>
                     </select>
                     <i class="fa-solid fa-chevron-down select-icon"></i>
                 </div>

@@ -127,11 +127,11 @@ function renderTeams(query = "", type = "all") {
         }
 
         const roleId = leaderRole ? leaderRole.type : 'otdd';
-        const helds = getHeldsForRole(roleId);
-        const heldsHtml = helds.map(h => `<img src="${h.img}" style="width:14px; height:14px; border:1px solid #333;" title="${h.name}">`).join('');
+        const helds = team.helds || getHeldsForRole(roleId);
+        const heldsHtml = helds.map(h => `<img src="${h.img}" style="width:26px; height:26px; border:1px solid #333; border-radius:2px;" title="${h.name}">`).join('');
 
         const html = `
-            <div class="team-card" onclick="openDetailsModal(${team.id})">
+            <div class="team-card" onclick="toggleGroupExpansion(this)">
                 <div class="col-content content-info">
                     <span class="content-title">${team.content} <span style="font-size: 0.75rem; color:#888;">(${team.difficulty})</span></span>
                     <div style="font-size: 0.8rem; color:#aaa; margin-top: 4px; font-style: italic;">"${team.comment}"</div>
@@ -144,26 +144,6 @@ function renderTeams(query = "", type = "all") {
                             <i class="fa-solid fa-crown" style="color: #faba4d; margin-right: 4px;"></i>
                             ${team.leader}
                         </span>
-                        <div class="player-tooltip" style="width: 320px;">
-                            <div class="tooltip-header">
-                                <img src="assets/clans/${team.clan}.png" class="clan-icon" onerror="this.style.display='none'">
-                                <div class="tooltip-info">
-                                    <span class="tooltip-clan">${getDisplayClanName(team.clan, team.clanName)}</span>
-                                    <span class="tooltip-lvl">Level ${team.level}</span>
-                                </div>
-                            </div>
-                            <div class="tooltip-body">
-                                <div class="tooltip-poke-row">
-                                    <img src="${getPokeImg(team.dex, pokeName)}" class="tooltip-poke-img">
-                                    <div class="tooltip-poke-info">
-                                        <div class="tooltip-poke-name">${pokeName || 'Pokémon Principal'}</div>
-                                        <div style="display: flex; gap: 4px; margin-top: 2px;">
-                                            ${heldsHtml}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -181,14 +161,59 @@ function renderTeams(query = "", type = "all") {
                 </div>
                 
                 <div class="col-action">
-                    ${team.leader === 'Você'
+                    ${team.leader === 'Xandy'
                 ? `<button class="action-btn highlight-btn" style="padding: 8px 16px; background-color:#10b981;" onclick="event.stopPropagation(); document.getElementById('applicantsModal').classList.add('active')"><i class="fa-solid fa-users"></i> Ver (2)</button>`
                 : `<button class="action-btn" style="padding: 8px 16px;" onclick="event.stopPropagation(); openApplyModal(${team.id})">Entrar</button>`}
+                </div>
+
+                <!-- Expansão: Membros do Grupo -->
+                <div class="team-expansion-content">
+                    <div class="members-expansion-list">
+                        ${(() => {
+                            let membersList = team.members || [];
+                            if (team.leader === 'Xandy' && membersList.length === 0) {
+                                membersList = [{
+                                    name: "Xandy",
+                                    level: 605,
+                                    clan: "ironhard",
+                                    dex: team.dex,
+                                    pokeName: team.leader_poke_name,
+                                    helds: team.helds || getHeldsForRole('otdd')
+                                }];
+                            }
+                            return membersList.map(m => `
+                                <div class="member-expansion-item">
+                                    <div class="member-exp-info">
+                                        <img src="assets/clans/${m.clan}.png" class="member-exp-clan" onerror="this.src='assets/clans/seavell.png'">
+                                        <div style="display: flex; flex-direction: column;">
+                                            <span class="member-exp-name">${m.name}</span>
+                                            <span class="member-exp-lvl">Level ${m.level}</span>
+                                        </div>
+                                    </div>
+                                    <div class="member-exp-poke">
+                                        <img src="${getPokeImg(m.dex, m.pokeName)}" class="member-exp-icon">
+                                        <span class="member-exp-pokename">${m.pokeName}</span>
+                                    </div>
+                                    <div class="member-exp-helds">
+                                        ${(m.helds || []).map(h => `<img src="${h.img}" title="${h.name}">`).join('')}
+                                    </div>
+                                </div>
+                            `).join('');
+                        })()}
+                    </div>
                 </div>
             </div>
         `;
         list.innerHTML += html;
     });
+}
+
+function toggleGroupExpansion(card) {
+    // Fecha outros abertos para manter a interface limpa
+    document.querySelectorAll('.team-card.expanded').forEach(c => {
+        if (c !== card) c.classList.remove('expanded');
+    });
+    card.classList.toggle('expanded');
 }
 
 // --- Modal Management ---
@@ -205,14 +230,21 @@ function openDetailsModal(teamId) {
         pokeName = leaderRole.title.split(' (')[0];
     }
 
-    const players = [
-        { name: team.leader, level: team.level, clan: team.clan, clanName: getDisplayClanName(team.clan, team.clanName), dex: team.dex, pokeName: pokeName, roles: team.roles.filter(r => r.filled && r.title.includes(team.leader)) }
+    const players = team.members || [
+        { 
+            name: team.leader, 
+            level: team.level, 
+            clan: team.clan, 
+            clanName: getDisplayClanName(team.clan, team.clanName), 
+            dex: team.dex, 
+            pokeName: pokeName, 
+            isLeader: true,
+            helds: team.helds || getHeldsForRole(leaderRole ? leaderRole.type : 'otdd')
+        }
     ];
 
     container.innerHTML = players.map(p => {
-        const roleId = p.roles.length > 0 ? p.roles[0].type : 'otdd';
-        const helds = getHeldsForRole(roleId);
-        const heldsHtml = helds.map(h => `<img src="${h.img}" style="width:32px; height:32px; border:1px solid #333; border-radius:4px;" title="${h.name}">`).join('');
+        const heldsHtml = (p.helds || []).map(h => `<img src="${h.img}" style="width:32px; height:32px; border:1px solid #333; border-radius:4px;" title="${h.name}">`).join('');
 
         return `
             <div class="player-detail-card-premium">
@@ -221,11 +253,11 @@ function openDetailsModal(teamId) {
                         <img src="assets/clans/${p.clan}.png" onerror="this.src='assets/clans/seavell.png'">
                     </div>
                     <div class="pdc-info">
-                        <div class="pdc-clan-name">${p.clanName}</div>
+                        <div class="pdc-clan-name">${p.clanName || getDisplayClanName(p.clan)}</div>
                         <div class="pdc-level">Level ${p.level}</div>
                         <div class="pdc-player-status">
                             <span class="status-dot online"></span>
-                            <i class="fa-solid fa-crown" style="color: #faba4d; font-size: 0.8rem; margin: 0 5px;"></i>
+                            ${p.isLeader ? `<i class="fa-solid fa-crown" style="color: #faba4d; font-size: 0.8rem; margin: 0 5px;"></i>` : ''}
                             <span class="pdc-player-name">${p.name}</span>
                         </div>
                     </div>
@@ -325,7 +357,6 @@ function checkApplyValidity() {
 }
 
 function submitApplication() {
-    alert("Sua solicitação foi enviada ao líder do grupo!");
     closeApplyModal();
 }
 
@@ -418,17 +449,10 @@ function selectPokemonFromPicker(pokeName) {
 
 function confirmPokemonSelection() {
     if (!selectedPokemon || !activeRowForPicker) {
-        alert("Por favor, selecione um Pokémon primeiro.");
         return;
     }
 
-    const roleSelect = activeRowForPicker.querySelector('.role-select');
-    const targetRole = roleSelect ? roleSelect.value : selectedApplyRole;
 
-    if (targetRole && targetRole !== 'any' && !selectedPokemon.roles.includes(targetRole)) {
-        alert(`Este Pokémon não suporta a função selecionada (${targetRole.toUpperCase()}). Escolha outro Pokémon ou mude a função.`);
-        return;
-    }
 
     const isApplyModal = activeRowForPicker.id === 'applyPokePicker';
 
@@ -451,6 +475,7 @@ function confirmPokemonSelection() {
     } else {
         const pokeSelect = activeRowForPicker.querySelector('.poke-select');
         const pokeIcon = activeRowForPicker.querySelector('.poke-icon-preview');
+        const detectedRolesContainer = activeRowForPicker.querySelector('.detected-roles');
 
         if (pokeSelect) {
             pokeSelect.dataset.dex = selectedPokemon.dex;
@@ -461,6 +486,25 @@ function confirmPokemonSelection() {
 
         if (pokeIcon) {
             pokeIcon.src = getPokeImg(selectedPokemon.dex, selectedPokemon.name);
+        }
+
+        if (detectedRolesContainer && !activeRowForPicker.classList.contains('apply-poke-picker')) {
+            // Auto-detect roles
+            const rolesHtml = selectedPokemon.roles.map(rid => {
+                const r = appData.roles.find(role => role.id === rid);
+                return `<img src="${r ? r.icon : ''}" title="${getRoleName(rid)}" style="width:16px; height:16px; opacity:0.8;">`;
+            }).join('');
+            detectedRolesContainer.innerHTML = rolesHtml;
+
+            // Generate and Show Helds for the creator
+            const heldsContainer = activeRowForPicker.querySelector('.creator-poke-helds');
+            if (heldsContainer) {
+                const primaryRole = selectedPokemon.roles[0] || 'otdd';
+                const helds = getHeldsForRole(primaryRole);
+                heldsContainer.innerHTML = helds.map(h => `
+                    <img src="${h.img}" title="${h.name}" style="width:24px; height:24px; border:1px solid #333; border-radius:2px;">
+                `).join('');
+            }
         }
     }
 
@@ -485,6 +529,117 @@ function setupCreationModal() {
     if (addRoleBtn) addRoleBtn.addEventListener('click', createNeededRoleRow);
 }
 
+// --- Solicitações (Applicants) ---
+let dummyApplicants = [
+    {
+        id: 1,
+        name: 'Brock',
+        level: 550,
+        clan: 'orebound',
+        dex: 105,
+        pokeName: 'Shiny Marowak',
+        role: 'otdd',
+        helds: [
+            { name: 'X-Attack', img: 'assets/held item/atk8.png' },
+            { name: 'Ghost', img: 'assets/held item/Ghost.png' }
+        ]
+    },
+    {
+        id: 2,
+        name: 'Ash',
+        level: 580,
+        clan: 'naturia',
+        dex: 25,
+        pokeName: 'Pikachu',
+        role: 'bdd',
+        helds: [
+            { name: 'X-Attack', img: 'assets/held item/atk7.png' },
+            { name: 'Ghost', img: 'assets/held item/Ghost.png' }
+        ]
+    }
+];
+
+function openApplicantsModal() {
+    const modal = document.getElementById('applicantsModal');
+    if (modal) {
+        modal.classList.add('active');
+        renderApplicants();
+    }
+}
+
+function renderApplicants() {
+    const container = document.querySelector('#applicantsModal .modal-body');
+    if (!container) return;
+
+    if (dummyApplicants.length === 0) {
+        container.innerHTML = `
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: #444;">
+                <i class="fa-solid fa-users-slash" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                <span style="font-weight: 600;">Nenhuma solicitação pendente</span>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = dummyApplicants.map(p => `
+        <div class="applicant-row-premium" id="applicant-${p.id}">
+            <div class="app-col-player">
+                <img src="assets/clans/${p.clan}.png" class="app-clan-icon">
+                <div class="app-player-text">
+                    <div class="app-player-name">${p.name}</div>
+                    <div class="app-player-lvl">Level ${p.level}</div>
+                </div>
+            </div>
+
+            <div class="app-col-poke">
+                <img src="${getPokeImg(p.dex, p.pokeName)}" class="app-poke-img">
+                <div class="app-poke-text">
+                    <span class="app-poke-name">${p.pokeName}</span>
+                    <div class="app-role-line">
+                        ${getRoleIcon(p.role, true)}
+                        <span class="app-role-name">${getRoleName(p.role)}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="app-col-helds">
+                ${(p.helds || []).map(h => `<div class="app-held-slot"><img src="${h.img}" title="${h.name}"></div>`).join('')}
+            </div>
+
+            <div class="app-separator"></div>
+
+            <div class="app-actions-ghost">
+                <button class="ghost-btn accept" onclick="acceptApplicant(${p.id})"><i class="fa-solid fa-check"></i></button>
+                <button class="ghost-btn decline" onclick="declineApplicant(${p.id})"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function acceptApplicant(id) {
+    // Feedback visual e remoção (simulação de aceite)
+    const row = document.getElementById(`applicant-${id}`);
+    if (row) {
+        row.style.transform = 'scale(0.95)';
+        row.style.opacity = '0';
+        setTimeout(() => {
+            dummyApplicants = dummyApplicants.filter(p => p.id !== id);
+            renderApplicants();
+        }, 300);
+    }
+}
+
+function declineApplicant(id) {
+    const row = document.getElementById(`applicant-${id}`);
+    if (row) {
+        row.style.transform = 'scale(0.95)';
+        row.style.opacity = '0';
+        setTimeout(() => {
+            dummyApplicants = dummyApplicants.filter(p => p.id !== id);
+            renderApplicants();
+        }, 300);
+    }
+}
 function openCreateModal() {
     document.getElementById('createModal').classList.add('active');
 }
@@ -516,34 +671,26 @@ function populateContentsDropdown() {
 function addDynamicRoleRow() {
     const list = document.getElementById('creationRolesList');
     const row = document.createElement('div');
-    row.className = 'dynamic-role-row';
-
+    row.className = 'dynamic-role-row creator-poke-slot';
+    
     if (!appData) return;
 
-    let roleIconsHtml = appData.roles.map(r => `
-        <div class="creator-role-toggle" data-role="${r.id}" title="${r.name}" onclick="toggleCreatorRole(this)">
-            <img src="${r.icon}">
-        </div>
-    `).join('');
-
     row.innerHTML = `
-        <div class="creator-roles-container">
-            ${roleIconsHtml}
-        </div>
-        <div class="role-row-poke-picker" onclick="openPickerModal(this.parentElement)" style="flex: 1;">
-            <img src="assets/images_ui/pokeball_empty.png" class="poke-icon-preview" style="width:20px;">
-            <span class="poke-select" data-dex="" data-name="">Selecionar Pokémon...</span>
+        <div class="role-row-poke-picker" onclick="openPickerModal(this.parentElement)" style="flex: 1; justify-content: flex-start; gap: 15px; padding: 10px 15px;">
+            <div class="poke-icon-wrapper" style="width: 42px; height: 42px; background: #000; border: 1px solid #333; border-radius: 6px; display: flex; align-items: center; justify-content: center;">
+                <img src="assets/images_ui/pokeball_empty.png" class="poke-icon-preview" style="width:32px; height:32px; object-fit: contain;">
+            </div>
+            <div style="display: flex; flex-direction: column; flex: 1;">
+                <span class="poke-select" data-dex="" data-name="" style="color: #666; font-weight: 600; font-size: 0.95rem;">Selecionar Pokémon...</span>
+                <div style="display: flex; align-items: center; gap: 10px; margin-top: 4px;">
+                    <div class="detected-roles" style="display: flex; gap: 4px;"></div>
+                    <div class="creator-poke-helds" style="display: flex; gap: 4px; border-left: 1px solid #222; padding-left: 10px;"></div>
+                </div>
+            </div>
+            <button class="remove-role-btn" onclick="event.stopPropagation(); this.parentElement.parentElement.remove();" style="background:none; border:none; color:#ef4444; cursor:pointer; padding: 10px;"><i class="fa-solid fa-trash"></i></button>
         </div>
     `;
     list.appendChild(row);
-
-    // Default first role as active
-    const firstRole = row.querySelector('.creator-role-toggle');
-    if (firstRole) firstRole.classList.add('active');
-}
-
-function toggleCreatorRole(elem) {
-    elem.classList.toggle('active');
 }
 
 function createNeededRoleRow() {
@@ -586,20 +733,20 @@ function createGroup() {
 
     const comment = document.getElementById('createComment').value || "Bora grupo!";
     const reqLvl = parseInt(document.getElementById('createReqLvl').value) || 100;
+    const maxPlayersInput = parseInt(document.getElementById('createMaxPlayers').value) || 4;
 
     const roleRows = document.querySelectorAll('.dynamic-role-row:not(.needed-role-row)');
     const neededRoleRows = document.querySelectorAll('.needed-role-row');
     const newRoles = [];
 
     roleRows.forEach(row => {
-        const activeToggles = row.querySelectorAll('.creator-role-toggle.active');
-        const roleIds = activeToggles.length > 0
-            ? Array.from(activeToggles).map(t => t.dataset.role)
-            : ['otdd']; // Default fallback
-
         const pokeSelect = row.querySelector('.poke-select');
         const pokeDex = pokeSelect.dataset.dex;
         const pokeName = pokeSelect.dataset.name || "Qualquer";
+        
+        // Find the pokemon in appData to get its roles
+        const pokeData = appData.pokemons.find(p => p.name === pokeName);
+        const roleIds = (pokeData && pokeData.roles) ? pokeData.roles : ['otdd'];
 
         roleIds.forEach(roleId => {
             newRoles.push({
@@ -615,7 +762,7 @@ function createGroup() {
         newRoles.push({ type: roleId, filled: false, title: getRoleName(roleId) });
     });
 
-    const maxP = Math.max(newRoles.length, 4);
+    const maxP = Math.max(newRoles.length, maxPlayersInput);
     while (newRoles.length < maxP) {
         newRoles.push({ type: "empty", filled: false, title: "Qualquer Função" });
     }
@@ -629,10 +776,10 @@ function createGroup() {
         id: dummyTeams.length + 1,
         content: contentName,
         difficulty: contentDifficulty,
-        leader: "Você",
+        leader: "Xandy",
         clan: "ironhard",
         clanName: "Ironhard",
-        level: reqLvl + 10,
+        level: 605,
         dex: leaderDex,
         leader_poke_name: leaderPokeName,
         reqLvl: reqLvl,
@@ -652,16 +799,22 @@ function createGroup() {
 function getHeldsForRole(roleType) {
     const isDefensive = roleType === 'tank' || roleType === 'otanker';
     const tier = Math.random() > 0.5 ? '7' : '8';
-
-    if (isDefensive) {
-        return [
-            { name: 'X-Defense', img: `assets/held item/def${tier}.png` },
-            { name: 'Ghost', img: `assets/held item/Ghost.png` }
-        ];
+    
+    // Randomize primary held
+    const defTypes = ['def', 'def', 'Ghost']; // Ghost is common
+    const atkTypes = ['atk', 'atk', 'atk'];
+    
+    const types = isDefensive ? defTypes : atkTypes;
+    const t1 = types[Math.floor(Math.random() * types.length)];
+    
+    const helds = [];
+    if (t1 === 'Ghost') {
+        helds.push({ name: 'Ghost', img: 'assets/held item/Ghost.png' });
+        helds.push({ name: isDefensive ? 'X-Defense' : 'X-Attack', img: `assets/held item/${isDefensive ? 'def' : 'atk'}${tier}.png` });
     } else {
-        return [
-            { name: 'X-Attack', img: `assets/held item/atk${tier}.png` },
-            { name: 'Ghost', img: `assets/held item/Ghost.png` }
-        ];
+        helds.push({ name: isDefensive ? 'X-Defense' : 'X-Attack', img: `assets/held item/${t1}${tier}.png` });
+        helds.push({ name: 'Ghost', img: 'assets/held item/Ghost.png' });
     }
+    
+    return helds;
 }

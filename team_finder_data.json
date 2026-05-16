@@ -823,13 +823,6 @@
             ]
         },
         {
-            "name": "Mega Pyroar",
-            "dex": 668,
-            "roles": [
-                "bdd"
-            ]
-        },
-        {
             "name": "Mega Sableye",
             "dex": 302,
             "roles": [
@@ -2115,11 +2108,61 @@
             "level": 480,
             "dex": 6,
             "leader_poke_name": "Shiny Charizard",
-            "reqLvl": 525,
+            "reqLvl": 600,
             "players": 2,
             "maxPlayers": 4,
             "type": "quests",
             "comment": "full travell",
+            "helds": [
+                {
+                    "name": "X-Attack",
+                    "img": "assets/held item/atk8.png"
+                },
+                {
+                    "name": "Ghost",
+                    "img": "assets/held item/Ghost.png"
+                }
+            ],
+            "members": [
+                {
+                    "name": "Blaine",
+                    "level": 480,
+                    "clan": "volcanic",
+                    "clanName": "Volcanic",
+                    "dex": 6,
+                    "pokeName": "Shiny Charizard",
+                    "isLeader": true,
+                    "helds": [
+                        {
+                            "name": "X-Attack",
+                            "img": "assets/held item/atk8.png"
+                        },
+                        {
+                            "name": "Ghost",
+                            "img": "assets/held item/Ghost.png"
+                        }
+                    ]
+                },
+                {
+                    "name": "Silver",
+                    "level": 510,
+                    "clan": "seavell",
+                    "clanName": "Seavell",
+                    "dex": 160,
+                    "pokeName": "Shiny Feraligatr",
+                    "isLeader": false,
+                    "helds": [
+                        {
+                            "name": "X-Attack",
+                            "img": "assets/held item/atk8.png"
+                        },
+                        {
+                            "name": "Ghost",
+                            "img": "assets/held item/Ghost.png"
+                        }
+                    ]
+                }
+            ],
             "roles": [
                 {
                     "type": "otdd",
@@ -2158,11 +2201,47 @@
             "maxPlayers": 4,
             "type": "quests",
             "comment": "bora entei, tanko bem",
+            "helds": [
+                {
+                    "name": "X-Defense",
+                    "img": "assets/held item/def8.png"
+                },
+                {
+                    "name": "Ghost",
+                    "img": "assets/held item/Ghost.png"
+                }
+            ],
+            "members": [
+                {
+                    "name": "Misty",
+                    "level": 520,
+                    "clan": "seavell",
+                    "clanName": "Seavell",
+                    "dex": 9,
+                    "pokeName": "Shiny Blastoise",
+                    "isLeader": true,
+                    "helds": [
+                        {
+                            "name": "X-Defense",
+                            "img": "assets/held item/def8.png"
+                        },
+                        {
+                            "name": "Ghost",
+                            "img": "assets/held item/Ghost.png"
+                        }
+                    ]
+                }
+            ],
             "roles": [
                 {
                     "type": "tank",
                     "filled": true,
-                    "title": "Shiny Blastoise"
+                    "title": "Shiny Blastoise (Tank)"
+                },
+                {
+                    "type": "otdd",
+                    "filled": false,
+                    "title": "Vaga Aberta"
                 },
                 {
                     "type": "otdd",
@@ -2171,16 +2250,6 @@
                 },
                 {
                     "type": "bdd",
-                    "filled": false,
-                    "title": "Vaga Aberta"
-                },
-                {
-                    "type": "tank",
-                    "filled": false,
-                    "title": "Vaga Aberta"
-                },
-                {
-                    "type": "sot",
                     "filled": false,
                     "title": "Vaga Aberta"
                 }
