@@ -392,6 +392,7 @@ function openApplyModal(teamId) {
     document.getElementById('applyPokeIcon').src = "assets/images_ui/pokeball_empty.png";
     document.getElementById('applyPokeName').innerText = "Selecionar Pokémon...";
     document.getElementById('applyPokeName').dataset.dex = "";
+    document.getElementById('applyPokeName').dataset.name = "";
     document.getElementById('applyPokeHelds').innerHTML = "";
     document.getElementById('sendApplyBtn').disabled = true;
     selectedApplyRole = null;
