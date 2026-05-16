@@ -178,7 +178,7 @@ function renderTeams(query = "", type = "all") {
 
                 <div class="col-reqs reqs-info">
                     <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-                        <span style="font-weight: 500;">Lvl ${team.reqLvl}+</span>
+                        <span style="font-weight: 500;">Level ${team.reqLvl}+</span>
                         <span style="font-size: 0.75rem; color: #777;">${team.players}/${team.maxPlayers} Jogadores</span>
                     </div>
                 </div>
@@ -199,41 +199,41 @@ function renderTeams(query = "", type = "all") {
                 <div class="team-expansion-content">
                     <div class="members-expansion-list">
                         ${(() => {
-                            let membersList = team.members || [];
-                            if (team.leader === 'Xandy' && membersList.length === 0) {
-                                if (team.leader_pokes && team.leader_pokes.length > 0) {
-                                    membersList = team.leader_pokes.map(pk => ({
-                                        name: "Xandy",
-                                        level: 605,
-                                        clan: "ironhard",
-                                        dex: pk.dex,
-                                        pokeName: pk.name,
-                                        helds: pk.helds
-                                    }));
-                                } else {
-                                    membersList = [{
-                                        name: "Xandy",
-                                        level: 605,
-                                        clan: "ironhard",
-                                        dex: team.dex,
-                                        pokeName: team.leader_poke_name,
-                                        helds: team.helds || getHeldsForRole(leaderRole ? leaderRole.type : 'otdd', "Xandy")
-                                    }];
-                                }
-                            }
-                            // Agrupar membros por nome para exibir múltiplos pokémons em uma única linha
-                            const groupedMembers = [];
-                            membersList.forEach(m => {
-                                let existing = groupedMembers.find(gm => gm.name === m.name);
-                                if (existing) {
-                                    if (!existing.pokes) existing.pokes = [{ name: existing.pokeName, dex: existing.dex, helds: existing.helds }];
-                                    existing.pokes.push({ name: m.pokeName, dex: m.dex, helds: m.helds });
-                                    return;
-                                }
-                                groupedMembers.push({ ...m });
-                            });
+                let membersList = team.members || [];
+                if (team.leader === 'Xandy' && membersList.length === 0) {
+                    if (team.leader_pokes && team.leader_pokes.length > 0) {
+                        membersList = team.leader_pokes.map(pk => ({
+                            name: "Xandy",
+                            level: 605,
+                            clan: "ironhard",
+                            dex: pk.dex,
+                            pokeName: pk.name,
+                            helds: pk.helds
+                        }));
+                    } else {
+                        membersList = [{
+                            name: "Xandy",
+                            level: 605,
+                            clan: "ironhard",
+                            dex: team.dex,
+                            pokeName: team.leader_poke_name,
+                            helds: team.helds || getHeldsForRole(leaderRole ? leaderRole.type : 'otdd', "Xandy")
+                        }];
+                    }
+                }
+                // Agrupar membros por nome para exibir múltiplos pokémons em uma única linha
+                const groupedMembers = [];
+                membersList.forEach(m => {
+                    let existing = groupedMembers.find(gm => gm.name === m.name);
+                    if (existing) {
+                        if (!existing.pokes) existing.pokes = [{ name: existing.pokeName, dex: existing.dex, helds: existing.helds }];
+                        existing.pokes.push({ name: m.pokeName, dex: m.dex, helds: m.helds });
+                        return;
+                    }
+                    groupedMembers.push({ ...m });
+                });
 
-                            return groupedMembers.map(m => `
+                return groupedMembers.map(m => `
                                 <div class="member-expansion-item">
                                     <div class="member-exp-info">
                                         <img src="assets/clans/${m.clan}.png" class="member-exp-clan" onerror="this.src='assets/clans/seavell.png'">
@@ -254,7 +254,7 @@ function renderTeams(query = "", type = "all") {
                                     </div>
                                 </div>
                             `).join('');
-                        })()}
+            })()}
                     </div>
                 </div>
             </div>
@@ -282,20 +282,20 @@ function openDetailsModal(teamId) {
     // Melhorar detecção da função do líder
     let leaderRole = team.roles.find(r => r.filled && r.title.includes(team.leader));
     if (!leaderRole) leaderRole = team.roles.find(r => r.filled);
-    
+
     let pokeName = team.leader_poke_name;
     if (!pokeName && leaderRole) {
         pokeName = leaderRole.title.split(' (')[0];
     }
 
     const players = team.members || [
-        { 
-            name: team.leader, 
-            level: team.level, 
-            clan: team.clan, 
-            clanName: getDisplayClanName(team.clan, team.clanName), 
-            dex: team.dex, 
-            pokeName: pokeName, 
+        {
+            name: team.leader,
+            level: team.level,
+            clan: team.clan,
+            clanName: getDisplayClanName(team.clan, team.clanName),
+            dex: team.dex,
+            pokeName: pokeName,
             isLeader: true,
             helds: team.helds || getHeldsForRole(leaderRole ? leaderRole.type : 'otdd', team.leader)
         }
@@ -405,7 +405,7 @@ function selectApplyRole(roleId, btn) {
     selectedApplyRole = roleId;
     document.querySelectorAll('#applyRoleContainer .role-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    
+
     // Atualizar helds se já houver pokemon selecionado
     const pokeNameElem = document.getElementById('applyPokeName');
     if (pokeNameElem && pokeNameElem.dataset.name) {
@@ -415,7 +415,7 @@ function selectApplyRole(roleId, btn) {
             <img src="${h.img}" style="width:36px; height:36px; border:1px solid #333; border-radius:4px;" title="${h.name}">
         `).join('');
     }
-    
+
     checkApplyValidity();
 }
 
@@ -744,7 +744,7 @@ function addDynamicRoleRow() {
     const list = document.getElementById('creationRolesList');
     const row = document.createElement('div');
     row.className = 'dynamic-role-row creator-poke-slot';
-    
+
     if (!appData) return;
 
     row.innerHTML = `
@@ -788,7 +788,7 @@ function createNeededRoleRow() {
     roleSelect.addEventListener('change', (e) => {
         const selectedRole = appData.roles.find(r => r.id === e.target.value);
         if (selectedRole) roleIcon.src = selectedRole.icon;
-        
+
         // Atualizar helds se já houver pokemon selecionado
         const pokeSelect = row.querySelector('.poke-select');
         if (pokeSelect && pokeSelect.dataset.name) {
@@ -827,7 +827,7 @@ function createGroup() {
         const pokeSelect = row.querySelector('.poke-select');
         const pokeDex = pokeSelect.dataset.dex;
         const pokeName = pokeSelect.dataset.name || "Qualquer";
-        
+
         // Find the pokemon in appData to get its roles
         const pokeData = appData.pokemons.find(p => p.name === pokeName);
         const roleIds = (pokeData && pokeData.roles) ? pokeData.roles : ['otdd'];
@@ -898,7 +898,7 @@ function getHeldsForRole(roleType, playerName = "Xandy") {
     // Semente determinística baseada no nome para manter consistência
     let seed = 0;
     for (let i = 0; i < playerName.length; i++) seed += playerName.charCodeAt(i);
-    
+
     const pseudoRandom = () => {
         seed = (seed * 9301 + 49297) % 233280;
         return seed / 233280;
@@ -906,14 +906,14 @@ function getHeldsForRole(roleType, playerName = "Xandy") {
 
     const roleLower = roleType.toLowerCase();
     const isDefensive = roleLower.includes('tank') || roleLower.includes('defen') || roleLower.includes('otanker');
-    
+
     const tier = pseudoRandom() > 0.5 ? '7' : '8';
     const prefix = isDefensive ? 'def' : 'atk';
     const primaryName = isDefensive ? 'X-Defense' : 'X-Attack';
-    
+
     const helds = [];
     const r = pseudoRandom();
-    
+
     if (r > 0.5) {
         helds.push({ name: 'Ghost', img: 'assets/held item/Ghost.png' });
         helds.push({ name: primaryName, img: `assets/held item/${prefix}${tier}.png` });
@@ -921,6 +921,6 @@ function getHeldsForRole(roleType, playerName = "Xandy") {
         helds.push({ name: primaryName, img: `assets/held item/${prefix}${tier}.png` });
         helds.push({ name: 'Ghost', img: 'assets/held item/Ghost.png' });
     }
-    
+
     return helds;
 }
