@@ -75,12 +75,13 @@ function getPokeImg(dex, name) {
     return `assets/pokemons/${padded}${variant}.png`;
 }
 
-function getRoleIcon(type, filled) {
+function getRoleIcon(type, filled, returnUrlOnly = false) {
     if (!filled) return '';
 
     const roleData = appData.roles.find(r => r.id === type);
     const iconPath = roleData ? roleData.icon : 'assets/icons/pve_tanker.png';
 
+    if (returnUrlOnly) return iconPath;
     return `<img src="${iconPath}" class="role-img" style="width:28px;">`;
 }
 
@@ -115,11 +116,40 @@ function renderTeams(query = "", type = "all") {
     }
 
     filtered.forEach(team => {
-        const rolesHtml = team.roles.map(r => `
-            <div class="role-slot ${r.filled ? 'filled ' + r.type : ''}" title="${r.filled ? r.title : getRoleName(r.type)}">
-                ${getRoleIcon(r.type, r.filled)}
-            </div>
-        `).join('');
+        // Agrupar funções por jogador para exibir apenas 1 slot por pessoa na composição
+        const playerRoles = [];
+        team.roles.forEach(r => {
+            if (r.filled) {
+                const mId = r.memberId || r.title.split(' (')[0]; // Fallback
+                let existing = playerRoles.find(p => p.memberId === mId);
+                const rTypes = r.types || [r.type];
+                if (existing) {
+                    rTypes.forEach(t => {
+                        if (!existing.allTypes.includes(t)) existing.allTypes.push(t);
+                    });
+                    return;
+                }
+                playerRoles.push({ ...r, memberId: mId, allTypes: [...rTypes] });
+            } else {
+                // Slots vazios permanecem individuais
+                playerRoles.push({ ...r, allTypes: [r.type] });
+            }
+        });
+
+        const rolesHtml = playerRoles.map(r => {
+            if (r.filled && r.allTypes.length > 1) {
+                return `
+                    <div class="role-slot filled multi-role" title="${r.title}">
+                        ${r.allTypes.slice(0, 2).map(t => getRoleIcon(t, true)).join('')}
+                    </div>
+                `;
+            }
+            return `
+                <div class="role-slot ${r.filled ? 'filled ' + r.type : ''}" title="${r.filled ? r.title : getRoleName(r.type)}">
+                    ${getRoleIcon(r.allTypes[0], r.filled)}
+                </div>
+            `;
+        }).join('');
 
         // Encontrar a função do líder de forma mais robusta
         let leaderRole = team.roles.find(r => r.filled && r.title.includes(team.leader));
@@ -171,30 +201,56 @@ function renderTeams(query = "", type = "all") {
                         ${(() => {
                             let membersList = team.members || [];
                             if (team.leader === 'Xandy' && membersList.length === 0) {
-                                membersList = [{
-                                    name: "Xandy",
-                                    level: 605,
-                                    clan: "ironhard",
-                                    dex: team.dex,
-                                    pokeName: team.leader_poke_name,
-                                    helds: team.helds || getHeldsForRole(leaderRole ? leaderRole.type : 'otdd', "Xandy")
-                                }];
+                                if (team.leader_pokes && team.leader_pokes.length > 0) {
+                                    membersList = team.leader_pokes.map(pk => ({
+                                        name: "Xandy",
+                                        level: 605,
+                                        clan: "ironhard",
+                                        dex: pk.dex,
+                                        pokeName: pk.name,
+                                        helds: pk.helds
+                                    }));
+                                } else {
+                                    membersList = [{
+                                        name: "Xandy",
+                                        level: 605,
+                                        clan: "ironhard",
+                                        dex: team.dex,
+                                        pokeName: team.leader_poke_name,
+                                        helds: team.helds || getHeldsForRole(leaderRole ? leaderRole.type : 'otdd', "Xandy")
+                                    }];
+                                }
                             }
-                            return membersList.map(m => `
+                            // Agrupar membros por nome para exibir múltiplos pokémons em uma única linha
+                            const groupedMembers = [];
+                            membersList.forEach(m => {
+                                let existing = groupedMembers.find(gm => gm.name === m.name);
+                                if (existing) {
+                                    if (!existing.pokes) existing.pokes = [{ name: existing.pokeName, dex: existing.dex, helds: existing.helds }];
+                                    existing.pokes.push({ name: m.pokeName, dex: m.dex, helds: m.helds });
+                                    return;
+                                }
+                                groupedMembers.push({ ...m });
+                            });
+
+                            return groupedMembers.map(m => `
                                 <div class="member-expansion-item">
                                     <div class="member-exp-info">
                                         <img src="assets/clans/${m.clan}.png" class="member-exp-clan" onerror="this.src='assets/clans/seavell.png'">
                                         <div style="display: flex; flex-direction: column;">
-                                            <span class="member-exp-name">${m.name}</span>
+                                            <span class="member-exp-name">${m.name} ${m.pokes ? `<span class="multi-poke-badge">${m.pokes.length} Pokes</span>` : ''}</span>
                                             <span class="member-exp-lvl">Level ${m.level}</span>
                                         </div>
                                     </div>
-                                    <div class="member-exp-poke">
-                                        <img src="${getPokeImg(m.dex, m.pokeName)}" class="member-exp-icon">
-                                        <span class="member-exp-pokename">${m.pokeName}</span>
-                                    </div>
-                                    <div class="member-exp-helds">
-                                        ${(m.helds || []).map(h => `<img src="${h.img}" title="${h.name}">`).join('')}
+                                    <div class="member-exp-pokes-container" style="display: flex; flex: 1; gap: 25px; overflow-x: auto; padding: 5px 0;">
+                                        ${(m.pokes || [{ name: m.pokeName, dex: m.dex, helds: m.helds }]).map(pk => `
+                                            <div class="member-exp-poke" style="display: flex; align-items: center; gap: 12px; min-width: 120px;">
+                                                <img src="${getPokeImg(pk.dex, pk.name)}" class="member-exp-icon" title="${pk.name}">
+                                                <div class="member-exp-helds">
+                                                    ${(pk.helds || []).map(h => `<img src="${h.img}" title="${h.name}">`).join('')}
+                                                </div>
+                                            </div>
+                                        `).join('')}
                                     </div>
                                 </div>
                             `).join('');
@@ -767,7 +823,7 @@ function createGroup() {
     const neededRoleRows = document.querySelectorAll('.needed-role-row');
     const newRoles = [];
 
-    roleRows.forEach(row => {
+    roleRows.forEach((row, rowIndex) => {
         const pokeSelect = row.querySelector('.poke-select');
         const pokeDex = pokeSelect.dataset.dex;
         const pokeName = pokeSelect.dataset.name || "Qualquer";
@@ -776,12 +832,13 @@ function createGroup() {
         const pokeData = appData.pokemons.find(p => p.name === pokeName);
         const roleIds = (pokeData && pokeData.roles) ? pokeData.roles : ['otdd'];
 
-        roleIds.forEach(roleId => {
-            newRoles.push({
-                type: roleId,
-                filled: !!pokeDex,
-                title: pokeName !== "Qualquer" ? `${pokeName} (${roleId.toUpperCase()})` : getRoleName(roleId)
-            });
+        newRoles.push({
+            types: roleIds,
+            type: roleIds[0],
+            filled: !!pokeDex,
+            title: pokeName !== "Qualquer" ? `${pokeName} (${roleIds.map(r => r.toUpperCase()).join('/')})` : getRoleName(roleIds[0]),
+            groupId: !!pokeDex ? `row-${rowIndex}` : null,
+            memberId: !!pokeDex ? "Xandy" : null // Identificador único do jogador
         });
     });
 
@@ -795,10 +852,22 @@ function createGroup() {
         newRoles.push({ type: "empty", filled: false, title: "Qualquer Função" });
     }
 
-    const leaderRow = roleRows[0];
-    const leaderPoke = leaderRow.querySelector('.poke-select');
-    const leaderDex = leaderPoke.dataset.dex || 25;
-    const leaderPokeName = leaderPoke.dataset.name || "Pikachu";
+    const leaderPokes = [];
+    roleRows.forEach(row => {
+        const pkSelect = row.querySelector('.poke-select');
+        const dex = pkSelect.dataset.dex;
+        const name = pkSelect.dataset.name;
+        if (dex && name) {
+            const pkData = appData.pokemons.find(p => p.name === name);
+            const roleIds = (pkData && pkData.roles) ? pkData.roles : ['otdd'];
+            leaderPokes.push({
+                name: name,
+                dex: dex,
+                helds: getHeldsForRole(roleIds[0], "Xandy"),
+                roles: roleIds
+            });
+        }
+    });
 
     const newTeam = {
         id: dummyTeams.length + 1,
@@ -808,8 +877,9 @@ function createGroup() {
         clan: "ironhard",
         clanName: "Ironhard",
         level: 605,
-        dex: leaderDex,
-        leader_poke_name: leaderPokeName,
+        dex: leaderPokes.length > 0 ? leaderPokes[0].dex : 25,
+        leader_poke_name: leaderPokes.length > 0 ? leaderPokes[0].name : "Pikachu",
+        leader_pokes: leaderPokes,
         reqLvl: reqLvl,
         players: 1,
         maxPlayers: maxP,
